@@ -12,7 +12,7 @@
 const settings = {
     "apiURL" : "http://localhost:8080",
     "appURL" : "http://localhost:3000",
-    // "siteAvailability" : "private",
+     "siteAvailability" : "private",
     // "samplesEndpoint" : "/reviewSamples",
     // "aliasesEndpoint" : "/aliases",
     // "sgdEndpoint" : "/sgdInfo",

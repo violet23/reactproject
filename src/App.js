@@ -7,8 +7,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // SubComponents
 // import AppContainer from './Components/AppContainer';
-import Topic from './Components/Topic';
-import Try from './Components/Try';
+import Topic from './Components/AppContainer';
+import AppContainer from './Components/AppContainer';
+//import Try from './Components/Try';
 // creating a theme with default fontfamily
 const theme1 = createMuiTheme({
   typography: { 
@@ -31,7 +32,7 @@ const theme1 = createMuiTheme({
 
 // creating custom theme
 const theme2 = createMuiTheme({
-  palette: {
+  /*palette: {
     primary: {
       light: '#60ad5e',
       main: '#2e7d32',
@@ -44,7 +45,7 @@ const theme2 = createMuiTheme({
       dark: '#ba000d',
       contrastText: '#fff',
     },
-  },
+  },*/
   typography: { 
     // Use the system font instead of the default Roboto font.
     fontFamily: [
@@ -75,19 +76,21 @@ class App extends Component {
 
   render() {
     const { isThemeLight } = this.state;
+    const background = isThemeLight ? 'linear-gradient(to bottom,#efefda,#efefda)' : 'linear-gradient(to bottom,#ede6e8,#ede6e8)'
+
 
     return (
       <MuiThemeProvider theme={isThemeLight ? theme1 : theme2}>
       <CssBaseline />
-      <div >
+      <div style={{height: '100%', background: background}}>
         <BrowserRouter>
          
           <Switch>
-            {/* <Route exact path='/' 
-            render={() => <AppContainer changeTheme={this.handleThemeChange}/>} /> */}
+            {<Route exact path='/' 
+            render={() => <AppContainer changeTheme={this.handleThemeChange}/>} />}
             {/* <Route path="/edit/:sample_id" component={EditSample} /> */}
-            <Route exact path="/" component={Try}/>
-            <Route path="/second/" component={Topic}/>
+            {/*<Route exact path="/" component={Try}/>
+            <Route path="/second/" component={Topic}/>*/}
           </Switch>   
         </BrowserRouter>
       </div>        
