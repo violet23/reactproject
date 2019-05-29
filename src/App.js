@@ -6,10 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // SubComponents
-// import AppContainer from './Components/AppContainer';
-import Topic from './Components/AppContainer';
 import AppContainer from './Components/AppContainer';
-//import Try from './Components/Try';
 // creating a theme with default fontfamily
 const theme1 = createMuiTheme({
   typography: { 

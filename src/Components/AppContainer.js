@@ -10,12 +10,13 @@ import ListItem from '@material-ui/core/ListItem';
 import CardActions from '@material-ui/core/CardActions';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
 import TabIcon from '@material-ui/icons/TabOutlined';
-import {Paper, IconButton, Typography} from '@material-ui/core';
+import {Paper, IconButton, Typography, LinearProgress} from '@material-ui/core';
 import FormatColorIcon from '@material-ui/icons/FormatColorFill';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 //sub components
 import PageNoSearch from './PageNoSearch';
+import Search from './Search';
 //configuration
 import Config from '../Config';
 
@@ -89,19 +90,30 @@ class AppContainer extends React.Component {
           const {classes} = this.props;
           const{searchOptions, pageData} = this.state;
           const SearchBar = searchOptions
+          ? <Search suggestions = {searchOptions} updateContent={this.updateContent}/>
+          //showing loading status when not connected to database.
+          : <Typography component = 'div'>
+            Loading Search Options
+            <LinearProgress className={classes.progress}/>
+          </Typography>
           const Page = <PageNoSearch updateContent = {this.updateContent}/>
         return(
             <div>
                 <Paper square={true} className = {pageData ? classes.appBar2 : classes.appBar}  elevation = {0}>
                 <CardActions>
                     <Grid container alignItems = {"center"} justify= {"space-between"}>
+
                         <Grid item sm = {"auto"}>
                             <Grid container spacing={8} alignItems={"center"} justify={"space-between"}>
+
+                                {/*SearchBar*/}
                                 <Grid item sm={"auto"}>
                                     {SearchBar}
-                                </Grid>                         
-                            </Grid>      
+                                </Grid>
+
+                              </Grid>      
                         </Grid>
+
                         <Grid item sm={"auto"}>
                         {<Tooltip title="Home" aria-label = "home">
                         <IconButton color = "primary" onClick = {this.refresh}>
