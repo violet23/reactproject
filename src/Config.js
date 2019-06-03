@@ -13,7 +13,8 @@ const settings = {
     "apiURL" : "http://localhost:8080",
     "appURL" : "http://localhost:3000",
      "siteAvailability" : "private",
-    // "samplesEndpoint" : "/reviewSamples",
+    "proteinsEndpoint" : "/reviewProteins",
+    "topicsEndpoint" : "/reviewTopics",
     // "aliasesEndpoint" : "/aliases",
     // "sgdEndpoint" : "/sgdInfo",
     // "trackHubPrefix" : "http://genome.ucsc.edu/cgi-bin/hgTracks?db=sacCer3&hubUrl=http://www.bx.psu.edu/~giardine/yepHub/hub2/hub.txt&textSize=12&sgdGene=dense&hgt.labelWidth=25&centerLabels=off&position=chrI%3A0-230218" 

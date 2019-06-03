@@ -59,18 +59,6 @@ class AppContainer extends React.Component {
         sampleStatus: ['Public', 'Private', 'All']
     };
 
-    componentDidMount(){
-    const getURL = Config.settings.apiURL;
-      axios.get(getURL).then(
-        res =>{
-            console.log(res.data.sample[0]);
-            this.setState({
-                samples:res.data.sample[0]
-            })
-        }).catch(err=>{
-            console.log(err);
-        });            
-        }
     refresh = () =>{
     this.setState({
       pageData: null

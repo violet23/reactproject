@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 
+import SearchTable from './SearchTable'
 // import image assets
 import pennstatelogo from '../pennstatelogo.png';
 import cegrlogo from '../CEGRlogo.png';
@@ -76,9 +77,9 @@ const PageNoSearch = (props) =>{
                     </Grid>
 
                     {/* Sample Explore Table */}
-                    {/*<Grid item style={{margon: '0 auto', padding:20}}>                    
+                    {<Grid item style={{margon: '0 auto', padding:20}}>                    
                         <SearchTable updateContent={props.updateContent}/>
-                    </Grid>*/}
+                    </Grid>}
                     
                     
                     {/* Footer  Section */}
