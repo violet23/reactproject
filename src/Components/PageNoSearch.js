@@ -15,7 +15,8 @@ const styles =({
     root: {
         height: '100vh',
         display: 'flex',
-        flexDirection:'column',         
+        flexDirection:'column',        
+        //background: 'linear-gradient(to bottom,#efefda,#efefda)' 
     },
     content:{
         flex : '1 0 auto',
@@ -71,18 +72,14 @@ const PageNoSearch = (props) =>{
                 <br/>
                 <Grid container spacing={0} direction="column" justify="space-between" >
                 
-                {/* Contributors Section */}
-                    <Grid item style={{padding:20}}>                    
-                     
-                    </Grid>
 
                     {/* Sample Explore Table */}
-                    {<Grid item style={{margon: '0 auto', padding:20}}>                    
-                        <SearchTable updateContent={props.updateContent}/>
+                    {<Grid item style={{margin: '0 auto', padding:20}}>                    
+                        <SearchTable />
                     </Grid>}
                     
                     
-                    {/* Footer  Section */}
+                     {/*Footer  Section */}
                     <Grid item className={classes.center}> 
                         <Grid container spacing={40} alignItems={"center"} direction="row" justify="center" className={classes.footer}>
                             <Grid item>

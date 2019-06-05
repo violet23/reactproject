@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // SubComponents
 import AppContainer from './Components/AppContainer';
 import Topic from './Components/Topic';
+import Protein from './Components/Protein';
 // creating a theme with default fontfamily
 const theme1 = createMuiTheme({
   typography: { 
@@ -86,7 +87,8 @@ class App extends Component {
           <Switch>
             {<Route exact path='/' 
             render={() => <AppContainer changeTheme={this.handleThemeChange}/>} />}
-            {<Route path="/:topicName" component={Topic} /> }
+            {<Route exact path="/:topicName" component={Topic} /> }
+            {<Route path="/protein/:proteinName" component={Protein} /> }
             {/*<Route exact path="/" component={Try}/>
             <Route path="/second/" component={Topic}/>*/}
           </Switch>   

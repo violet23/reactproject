@@ -64,7 +64,7 @@ class Searchtable extends React.Component {
             rowsPerPage: 10,
             viewColumns : false,
             filter: false,
-            //rowsPerPageOptions:[50,10,15,20,50,100],
+            rowsPerPageOptions:[50,10,15,20,50,100],
             onRowClick: this.handleRowClick,
             print:false,
             downloadOptions:{filename: 'topicData.csv', separator: ','} 
@@ -87,7 +87,7 @@ class Searchtable extends React.Component {
             );
 
         return (
-            <div style={{maxWidth: 980, margin: '0 auto'}}>
+            <div style={{maxWidth: 1140, margin: 'auto'}}>
              {topicsTable}
             </div>
            

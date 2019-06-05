@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types, react/jsx-handler-names */
 
 import React from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { withStyles } from '@material-ui/core/styles';
@@ -10,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 
-
+import Config from '../Config';
 const styles = theme => ({
   root: {     
     minWidth: 500,
@@ -151,36 +152,65 @@ const components = {
 
 class Search extends React.Component {
   state = {
-    single: "",    
+    single: "",
+    suggestions : [],
   };
-  
 
-  handleChange = name => item => {
+// life-cycle methods
+componentDidMount(){
+
+  // creating the url
+  let proteinURL = Config.settings.apiURL + Config.settings.proteinsEndpoint ;
+
+
+  // api call to retrieve all data
+  axios.get(proteinURL)
+      .then(res =>{
+                  
+          // extract unique sample names
+          const unique = [...new Set(res.data.proteins.map(protein => {
+            return protein.proteinName
+            } ))];
+         
+          // creating the suggestions on a sorted list
+          var suggestions = unique.sort().map(suggestion => ({
+            category: "proteinName",
+            value: suggestion,
+            label: suggestion,
+          }));
+          
+            this.setState({
+              suggestions: suggestions
+            });
+
+          });
+
+      
+      // Setting the title of the browser tab
+      document.title = "Yeast Epigenome Project | YEP"
+}
+
+  handleChange = name => value => {
     this.setState({
-        [name]: item,
+        [name]: value,
       });
 
     //Do nothing when the value is null
-      if(!item){
-        console.log(item);
+      if(!value){
+        console.log(value);
       }
       else{
-          // console.log(item.category);
-          
-          item.category === 'standardGeneName' 
-          ? this.props.updateContent(item.label.split(' / ')[0])() : this.props.updateContent(item.value.split(' / ')[1])();
-      }   
+          window.location.assign(Config.settings.appURL + '/protein/' + value.label);
+        
+      }
+   
   };
 
-  handleBlur = () => {
-    this.setState({
-        single: '',
-      });    
-  };
 
 
   render() {
-    const { classes, theme, suggestions } = this.props;    
+    const { classes, theme } = this.props;
+    const {suggestions} = this.state;
 
     const selectStyles = {
       input: base => ({
@@ -195,21 +225,20 @@ class Search extends React.Component {
 
     return (
       <div className={classes.root}>
-        <NoSsr>
-        <Paper className={classes.inputContainer} square={true} elevation={1}>                       
-                <Select
-                    classes={classes}
-                    styles={selectStyles}
-                    options={suggestions}
-                    components={components}
-                    value={this.state.single}
-                    onChange={this.handleChange('single')}
-                    onBlur={this.handleBlur}
-                    placeholder="Search your favourite factor"
-                    isClearable
-                    autoFocus
-                />
-          </Paper>
+        <NoSsr>        
+        <Paper className={classes.inputContainer} square={true} elevation={1}> 
+          <Select
+            classes={classes}
+            styles={selectStyles}
+            options={suggestions}
+            components={components}
+            value={this.state.single}
+            onChange={this.handleChange('single')}
+            placeholder="Search your factor"
+            isClearable
+            autoFocus
+          />
+           </Paper>
         </NoSsr>
       </div>
     );

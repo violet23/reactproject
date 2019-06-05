@@ -15,8 +15,8 @@ import FormatColorIcon from '@material-ui/icons/FormatColorFill';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 //sub components
-import PageNoSearch from './PageNoSearch';
 import Search from './Search';
+import PageNoSearch from './PageNoSearch';
 //configuration
 import Config from '../Config';
 
@@ -53,19 +53,53 @@ class AppContainer extends React.Component {
         searchOptions : null,    
         pageData: null,
         data: null,
-        treatment : '',
         publicFilter: '',
-        treatments:[],
-        sampleStatus: ['Public', 'Private', 'All']
+        proteinName: '',
+        proteinNames: [],
+        //sampleStatus: ['Public', 'Private', 'All']
     };
+
 
     refresh = () =>{
     this.setState({
       pageData: null
     });
-    
-    document.title = "Yeast Topic Project"
     }
+
+    componentDidMount(){
+      const getURL = Config.settings.apiURL + Config.settings.proteinsEndpoint;
+      axios.get(getURL).then(res=>{
+
+          let proteinNames = res.data.proteins.map(protein=>{
+            return protein.proteinName
+        });
+        console.log(proteinNames);
+          
+        this.setState({
+          searchOptions: proteinNames,
+        });
+        }).catch(err=>{
+          console.log(err);        
+        });
+    }
+
+    /*updateContent = (protein) => () =>{
+      const proteinURL = Config.settings.apiURL +Config.settings.proteinsEndpoint+'/protein/'+protein;
+      console.log(proteinURL);
+   
+      // fetch topicData 
+      axios.get(proteinURL).then(result=>{
+        const proteinName= [...new Set(result.data.proteins.map(protein => {
+          return protein.proteinName;
+          } ))]; 
+          
+        this.setState({
+          pageData: result.data.proteins,
+          data: result.data,
+          proteinNames: [...proteinName, 'All']
+        });
+      });    
+    };*/
     reload = () =>{
         window.location.reload();
       }
@@ -78,13 +112,15 @@ class AppContainer extends React.Component {
           const {classes} = this.props;
           const{searchOptions, pageData} = this.state;
           const SearchBar = searchOptions
-          ? <Search suggestions = {searchOptions} updateContent={this.updateContent}/>
+          ? <Search suggestions = {searchOptions} />
           //showing loading status when not connected to database.
           : <Typography component = 'div'>
             Loading Search Options
             <LinearProgress className={classes.progress}/>
           </Typography>
-          const Page = <PageNoSearch updateContent = {this.updateContent}/>
+          //const SearchBar = <Search suggestions = {searchOptions} updateContent={this.updateContent}/>
+          const Page = <PageNoSearch/>
+
         return(
             <div>
                 <Paper square={true} className = {pageData ? classes.appBar2 : classes.appBar}  elevation = {0}>
