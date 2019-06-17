@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 // Material ui styling
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,7 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // SubComponents
 import AppContainer from './Components/AppContainer';
-import Topic from './Components/Topic';
+import TopicContainer from './Components/TopicContainer';
 import Protein from './Components/Protein';
 // creating a theme with default fontfamily
 const theme1 = createMuiTheme({
@@ -85,12 +84,11 @@ class App extends Component {
         <BrowserRouter>
          
           <Switch>
-            {<Route exact path='/' 
-            render={() => <AppContainer changeTheme={this.handleThemeChange}/>} />}
-            {<Route exact path="/:topicName" component={Topic} /> }
-            {<Route path="/protein/:proteinName" component={Protein} /> }
-            {/*<Route exact path="/" component={Try}/>
-            <Route path="/second/" component={Topic}/>*/}
+            <Route exact path='/' 
+            render={() => <AppContainer changeTheme={this.handleThemeChange}/>} />
+            <Route exact path="/:topicName" component={TopicContainer}/>
+            <Route exact path="/protein/:proteinName" component={Protein} />
+            {/*<Route exact path="/try" component={General} /> */}
           </Switch>   
         </BrowserRouter>
       </div>        

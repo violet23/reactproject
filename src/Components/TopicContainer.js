@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 //provided components
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -11,15 +12,13 @@ import CardActions from '@material-ui/core/CardActions';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
 import TabIcon from '@material-ui/icons/TabOutlined';
 import {Paper, IconButton, Typography, LinearProgress} from '@material-ui/core';
+import Card from '@material-ui/core/Card';
 import FormatColorIcon from '@material-ui/icons/FormatColorFill';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 //sub components
 import Search from './Search';
-import PageNoSearch from './PageNoSearch';
-// import image assets
-import pennstatelogo from '../pennstatelogo.png';
-import cegrlogo from '../CEGRlogo.png';
+import TopicPage from './TopicPage';
 //configuration
 import Config from '../Config';
 
@@ -62,14 +61,8 @@ class AppContainer extends React.Component {
         //sampleStatus: ['Public', 'Private', 'All']
     };
 
-
-    refresh = () =>{
-    this.setState({
-      pageData: null
-    });
-    }
-
     componentDidMount(){
+      const topicURL = Config.settings.apiURL + Config.settings.topicsEndpoint;
       const getURL = Config.settings.apiURL + Config.settings.proteinsEndpoint;
       axios.get(getURL).then(res=>{
 
@@ -77,34 +70,19 @@ class AppContainer extends React.Component {
             return protein.proteinName
         });
         console.log(proteinNames);
-        console.log(this.props);
+          
         this.setState({
           searchOptions: proteinNames,
         });
         }).catch(err=>{
           console.log(err);        
         });
+        
     }
 
-    /*updateContent = (protein) => () =>{
-      const proteinURL = Config.settings.apiURL +Config.settings.proteinsEndpoint+'/protein/'+protein;
-      console.log(proteinURL);
-   
-      // fetch topicData 
-      axios.get(proteinURL).then(result=>{
-        const proteinName= [...new Set(result.data.proteins.map(protein => {
-          return protein.proteinName;
-          } ))]; 
-          
-        this.setState({
-          pageData: result.data.proteins,
-          data: result.data,
-          proteinNames: [...proteinName, 'All']
-        });
-      });    
-    };*/
+
     reload = () =>{
-        window.location.reload();
+      window.location.assign(Config.settings.appURL);
       }
 
     openNewTab = () =>{
@@ -122,7 +100,8 @@ class AppContainer extends React.Component {
             <LinearProgress className={classes.progress}/>
           </Typography>
           //const SearchBar = <Search suggestions = {searchOptions} updateContent={this.updateContent}/>
-          const Page = <PageNoSearch/>
+          const Page = <TopicPage/>
+          //const Page = <LandingPage updateContent={this.updateContent}/> 
 
         return(
             <div>
@@ -143,7 +122,7 @@ class AppContainer extends React.Component {
 
                         <Grid item sm={"auto"}>
                         {<Tooltip title="Home" aria-label = "home">
-                        <IconButton color = "primary" onClick = {this.refresh}>
+                        <IconButton color = "primary" onClick = {this.reload}>
                             <HomeIcon/>
                         </IconButton>
                         </Tooltip>}
@@ -160,26 +139,11 @@ class AppContainer extends React.Component {
                         </IconButton>
                         </Tooltip>}
                     </Grid>
-                    
                         </Grid>
                 </CardActions>
+                
                 </Paper>
                 {Page}
-                <Grid item className={classes.center}> 
-                        <Grid container spacing={40} alignItems={"center"} direction="row" justify="center" className={classes.footer}>
-                            <Grid item>
-                                <img src={pennstatelogo} alt="pennstateLogo" style={{width: 160}}/> 
-                            </Grid>
-                            <Grid item>
-                                <img src={cegrlogo} alt="cegrlogo" style={{height: 55}}/>
-                            </Grid>
-                            <Grid item>
-                                <Typography variant='body2' style={{paddingLeft:28}}>
-                                    &copy; 2019 Pennsylvania State University
-                                </Typography>
-                            </Grid>
-                        </Grid>                       
-                    </Grid>
             </div>
         )
 
@@ -191,7 +155,3 @@ AppContainer.propTypes = {
   };
   
   export default withStyles(styles)(AppContainer);
-
-
-
-
