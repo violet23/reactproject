@@ -16,12 +16,12 @@ import Collapse from '@material-ui/core/Collapse';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Config from '../Config';
-
+import TopicStatisticsTable from './TopicStatisticsTable'
 const styles = theme => ({
           
     center : {
         margin: 'auto',      
-        maxWidth: 1200,
+        maxWidth: 1100,
         padding: 10,
         // border: '2px solid green'
       },
@@ -36,7 +36,7 @@ const styles = theme => ({
       },
       expand: {
         transform: 'rotate(0deg)',
-        marginRight: 'auto',
+        marginLeft: 'auto',
         transition: theme.transitions.create('transform', {
           duration: theme.transitions.duration.shortest,
         }),
@@ -52,8 +52,8 @@ const styles = theme => ({
 
 class TopicPage extends React.Component {
   state ={
-        topicName :  'Original',
-        proteinList: null,
+        topicName :  ' Undefined',
+        proteinList: 'Undefined',
         loading: true,
         message: "Fetching Topics",
         expanded: false
@@ -74,7 +74,7 @@ class TopicPage extends React.Component {
               return topic.topicID
           });
           const proteinList = result.data.topic.map(topic =>{
-              return topic.proteinList
+              return topic.proteinList.split("\t").join()
           });
           this.setState({
             topicName: topicID[0],
@@ -93,8 +93,6 @@ class TopicPage extends React.Component {
       render(){  
         const {classes} = this.props;
         const{topicName,proteinList,loading,message,expanded} = this.state;
-        console.log(proteinList);
-        console.log(topicName);
     return (
             <div>
             <Grid container justify = "center">
@@ -132,14 +130,17 @@ class TopicPage extends React.Component {
                     </CardActions>
               <Collapse in={expanded} timeout="auto" unmountOnExit>
                   <CardContent>
-                    <Typography component="p" variant="body1">
-                        Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-                    </Typography>
+                  <TopicStatisticsTable />
+                  {/*<Grid item style={{margin: '0 auto', padding:20}}>                    
+                        <TopicStatisticsTable />
+                    </Grid>*/}  
                   </CardContent>
                 </Collapse>
                 </Card>
             </Grid>
-                <br/>           
+                <br/> 
+                {/* Sample Explore Table */}
+                        
             </div>
         
        

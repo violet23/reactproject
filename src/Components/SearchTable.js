@@ -23,7 +23,8 @@ class Searchtable extends React.Component {
             console.log(res.data.topics);
             //retrieve the protein data
             let values = res.data.topics.map(topic=>{
-                return [topic.topicID, (topic.proteinList).length]
+                console.log([topic.topicID, (topic.proteinList.split('\t')).length])
+                return [topic.topicID, (topic.proteinList.split('\t')).length]
             });
             this.setState({
                 data : values,
