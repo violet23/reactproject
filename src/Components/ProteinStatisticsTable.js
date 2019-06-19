@@ -6,11 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Config from '../Config';
 
-class TopicStatisticsTable extends React.Component {
+class ProteinStatisticsTable extends React.Component {
     
     handleRowClick = (rowData, rowMeta) => {
         //redirect to Topic page
-        window.location.assign(Config.settings.appURL + '/protein/'+ rowData[0]);
+        window.location.assign(Config.settings.appURL + '/'+rowData[0]);
     }
     state = {        
         data : [],
@@ -19,13 +19,13 @@ class TopicStatisticsTable extends React.Component {
         
     }
     componentDidMount(){
-        const topic = window.location.pathname;
-        var dataURL = Config.settings.apiURL+Config.settings.topicsEndpoint+topic;
+        const protein = (window.location.pathname).split("/")[2];
+        const dataURL = Config.settings.apiURL +Config.settings.proteinsEndpoint +"/" + protein;
         axios.get(dataURL)
         .then(res =>{
             //retrieve the protein data
-            let values = res.data.topic.map(topic=>{
-                var dict = res.data.topic[0]["topicStatisticsTable"][0];
+            let values = res.data.protein.map(protein=>{
+                var dict = res.data.protein[0]["proteinStatisticsTable"][0];
                 var arr = [];
                 for (var key in dict) {
                     if (dict.hasOwnProperty(key)) {
@@ -64,10 +64,10 @@ class TopicStatisticsTable extends React.Component {
         rowsPerPageOptions:[50,10,15,20,50,100],
         onRowClick: this.handleRowClick,
         print:false,
-        downloadOptions:{filename: "Topic"+window.location.pathname+'_ProteinTable.csv', separator: ','} 
+        downloadOptions:{filename: "Protein"+(window.location.pathname).split("/")[2]+'_TopicTable.csv', separator: ','} 
       };
 
-      const columns = ["proteins", 
+      const columns = ["topics", 
       "z-score", 
       "protein peak tags in this topic", 
       "total protein peak tags",
@@ -75,7 +75,7 @@ class TopicStatisticsTable extends React.Component {
       
       const {data, loading, message}= this.state;
       
-      const topicSTable = loading ? (  
+      const proteinSTable = loading ? (  
         <Typography component="div" >                   
             <Typography component="p" variant="subtitle1" >
                 {message}
@@ -93,9 +93,9 @@ class TopicStatisticsTable extends React.Component {
 
       return (   
         <div style={{maxWidth: 1140, margin: 'auto'}}>
-        {topicSTable}
+        {proteinSTable}
        </div>
   )
 }
 }
-export default withRouter(TopicStatisticsTable);
+export default withRouter(ProteinStatisticsTable);

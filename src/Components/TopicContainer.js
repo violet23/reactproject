@@ -2,20 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 //provided components
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
 import CardActions from '@material-ui/core/CardActions';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
 import TabIcon from '@material-ui/icons/TabOutlined';
 import {Paper, IconButton, Typography, LinearProgress} from '@material-ui/core';
-import Card from '@material-ui/core/Card';
 import FormatColorIcon from '@material-ui/icons/FormatColorFill';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
 //sub components
 import Search from './Search';
 import TopicPage from './TopicPage';
@@ -49,7 +43,7 @@ const styles = theme =>({
       },
 })
 
-class AppContainer extends React.Component {
+class TopicContainer extends React.Component {
     state = {      
         left: false,
         searchOptions : null,    
@@ -150,8 +144,8 @@ class AppContainer extends React.Component {
       }
 }
 
-AppContainer.propTypes = {
+TopicContainer.propTypes = {
     classes: PropTypes.object.isRequired,
   };
   
-  export default withStyles(styles)(AppContainer);
+  export default withStyles(styles)(TopicContainer);

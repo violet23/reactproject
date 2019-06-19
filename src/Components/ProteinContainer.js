@@ -3,22 +3,16 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 //provided components
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
 import CardActions from '@material-ui/core/CardActions';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
 import TabIcon from '@material-ui/icons/TabOutlined';
 import {Paper, IconButton, Typography, LinearProgress} from '@material-ui/core';
 import FormatColorIcon from '@material-ui/icons/FormatColorFill';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
 //sub components
-
 import Search from './Search';
+import ProteinPage from './ProteinPage';
 //configuration
 import Config from '../Config';
 
@@ -49,15 +43,18 @@ const styles = theme =>({
       },
 })
 
-class Protein extends React.Component {
+class ProteinContainer extends React.Component {
     state = {      
         left: false,
         searchOptions : null,    
         pageData: null,
         data: null,
         publicFilter: '',
-        sampleStatus: ['Public', 'Private', 'All']
+        proteinName: '',
+        proteinNames: [],
+        //sampleStatus: ['Public', 'Private', 'All']
     };
+
     componentDidMount(){
       const getURL = Config.settings.apiURL + Config.settings.proteinsEndpoint;
       axios.get(getURL).then(res=>{
@@ -73,7 +70,10 @@ class Protein extends React.Component {
         }).catch(err=>{
           console.log(err);        
         });
+        
     }
+
+
     reload = () =>{
       window.location.assign(Config.settings.appURL);
       }
@@ -85,13 +85,17 @@ class Protein extends React.Component {
       render(){
           const {classes} = this.props;
           const{searchOptions, pageData} = this.state;
-          const SearchBar =  searchOptions
-          ? <Search suggestions = {searchOptions}/>
+          const SearchBar = searchOptions
+          ? <Search suggestions = {searchOptions} />
           //showing loading status when not connected to database.
-          :<Typography component = 'div'>
+          : <Typography component = 'div'>
             Loading Search Options
             <LinearProgress className={classes.progress}/>
           </Typography>
+          //const SearchBar = <Search suggestions = {searchOptions} updateContent={this.updateContent}/>
+          const Page = <ProteinPage/>
+          //const Page = <LandingPage updateContent={this.updateContent}/> 
+
         return(
             <div>
                 <Paper square={true} className = {pageData ? classes.appBar2 : classes.appBar}  elevation = {0}>
@@ -130,15 +134,17 @@ class Protein extends React.Component {
                     </Grid>
                         </Grid>
                 </CardActions>
+                
                 </Paper>
+                {Page}
             </div>
         )
 
       }
 }
 
-Protein.propTypes = {
+ProteinContainer.propTypes = {
     classes: PropTypes.object.isRequired,
   };
   
-  export default withStyles(styles)(Protein);
+  export default withStyles(styles)(ProteinContainer);

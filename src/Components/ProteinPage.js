@@ -11,9 +11,13 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Collapse from '@material-ui/core/Collapse';
+import Tooltip from '@material-ui/core/Tooltip';
+import LaunchIcon from '@material-ui/icons/Launch';
+
 import Config from '../Config';
-import TopicStatisticsTable from './TopicStatisticsTable'
+import ProteinStatisticsTable from './ProteinStatisticsTable'
 const styles = theme => ({
+          
   jumbotron:{
     padding: '1rem 2rem',
     bottomMargin:'2rem',     
@@ -25,9 +29,12 @@ const styles = theme => ({
         // border: '2px solid green'
       },
     card: {
+        maxWidth: 1100,
         minWidth: 1100
     },           
-    
+      navbar:{
+        
+      },
       searchbar:{
         width: 1100
       },
@@ -47,35 +54,69 @@ const styles = theme => ({
 
 
 
-class TopicPage extends React.Component {
+class ProteinPage extends React.Component {
   state ={
-        topicName :  ' Undefined',
-        proteinList: 'Undefined',
+        proteinName :  ' Undefined',
+        topicList: 'Undefined',
+        description: "Undefined",
+        sgdID: "Undefined",
         loading: true,
         message: "Fetching Topics",
         expanded: false
     }
     
     handleExpandClick= () =>{
+        console.log(this.state.expanded)
         this.setState({
           expanded: !this.state.expanded
         })
     }
-    componentDidMount (){
-        const topic = window.location.pathname;
-        const topicURL = Config.settings.apiURL +Config.settings.topicsEndpoint +topic;
-        console.log(topicURL);
+
+    handleSGDClick = () => {
+        const protein = (window.location.pathname).split("/")[2];
         
-        axios.get(topicURL).then(result=>{
-          let topicID = result.data.topic.map(topic =>{
-              return topic.topicID
+        const proteinURL = Config.settings.apiURL +Config.settings.proteinsEndpoint +"/" + protein;
+        console.log(proteinURL);
+        axios.get(proteinURL).then(result=>{
+        const sgdID = result.data.protein.map(protein =>{
+            return protein.sgdID
+        });
+        let url = "https://www.yeastgenome.org/locus/" + sgdID;
+        let sgdWin = window.open(url, '_blank');
+        sgdWin.focus();
+    }).catch(error =>{
+        console.log(error);
+        this.setState({
+            loading: true,
+            message: error.message
+        })
+    });;  
+        
+    }
+    
+
+    componentDidMount (){
+        const protein = (window.location.pathname).split("/")[2];
+        
+        const proteinURL = Config.settings.apiURL +Config.settings.proteinsEndpoint +"/" + protein;
+        console.log(proteinURL);
+        
+        axios.get(proteinURL).then(result=>{
+          let proteinName = result.data.protein.map(protein =>{
+              return protein.proteinName
           });
-          const proteinList = result.data.topic.map(topic =>{
-              return topic.proteinList.split("\t").join(", ")
+          const description = result.data.protein.map(protein =>{
+            return protein.definition
+        });
+          const topicList = result.data.protein.map(protein =>{
+              return protein.topicList.split("\t").join(", ")
           });
+          
+        
           this.setState({
-            topicName: topicID[0],
-            proteinList: proteinList[0],
+            proteinName: proteinName[0],
+            description : description[0],
+            topicList: topicList[0],
             loading: false
           });
         }).catch(error =>{
@@ -87,9 +128,11 @@ class TopicPage extends React.Component {
         });;    
       }
 
+      
+
       render(){  
         const {classes} = this.props;
-        const{topicName,proteinList,loading,message,expanded} = this.state;
+        const{proteinName,topicList,description,loading,message,expanded} = this.state;
     return (
             <div>
             <div className={classes.jumbotron}>
@@ -97,23 +140,30 @@ class TopicPage extends React.Component {
                 <Card className={classes.card}>
                     <CardContent >
                         <Typography gutterBottom variant="h4" component="h2">
-                            Topic{topicName}
+                            {proteinName}
                         </Typography>
                         <Typography gutterBottom variant="h6" component="h5">
-                        Protein list: {proteinList}
+                            Topic list: {topicList}
                         </Typography>
-                        {/*<Grid container spacing={8} alignItems={"center"}>
+                        <Grid container spacing={8} alignItems={"center"}>
                                 <Grid item sm={"auto"}>
+                        
                         <Typography component="p" variant="body1" >
-                            
+                        {description}
                         </Typography>
+                        
                         </Grid>
-                        </Grid>*/}
+                        </Grid>
 
                     </CardContent>
                     <Divider variant="middle"/>
                     <CardActions>
-
+                    <Tooltip title="Saccharomyces Genome Database" aria-label="Go to Saccharomyces Genome Database">
+                                        <Button size="small" color="primary" onClick={this.handleSGDClick}>
+                                        <LaunchIcon className={classes.leftIcon} />
+                                        view on SGD
+                                        </Button>
+                    </Tooltip>
                     {/*<Button size="small">
                     Learn More
 
@@ -130,12 +180,9 @@ class TopicPage extends React.Component {
                     </Button>
                     </CardActions>
               <Collapse in={expanded} timeout="auto" unmountOnExit>
-                  <CardContent>
-                  <TopicStatisticsTable />
-                  {/*<Grid item style={{margin: '0 auto', padding:20}}>                    
-                        <TopicStatisticsTable />
-                    </Grid>*/}  
-                  </CardContent>
+                 {<CardContent>
+                  <ProteinStatisticsTable />
+                  </CardContent>}
                 </Collapse>
                 </Card>
             </Grid>
@@ -144,12 +191,13 @@ class TopicPage extends React.Component {
                         
             </div>
             </div>
+        
        
     );
 }}
 
-TopicPage.propTypes = {
+ProteinPage.propTypes = {
     classes: PropTypes.object.isRequired,
   };
   
-  export default withStyles(styles)(TopicPage);
+  export default withStyles(styles)(ProteinPage);

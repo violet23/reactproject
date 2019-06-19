@@ -5,15 +5,11 @@ import { withStyles } from '@material-ui/core/styles';
 //provided components
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
 import CardActions from '@material-ui/core/CardActions';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
 import TabIcon from '@material-ui/icons/TabOutlined';
 import {Paper, IconButton, Typography, LinearProgress} from '@material-ui/core';
 import FormatColorIcon from '@material-ui/icons/FormatColorFill';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
 //sub components
 import Search from './Search';
 import PageNoSearch from './PageNoSearch';
