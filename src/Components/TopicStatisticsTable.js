@@ -10,7 +10,8 @@ class TopicStatisticsTable extends React.Component {
     
     handleRowClick = (rowData, rowMeta) => {
         //redirect to Topic page
-        window.location.assign(Config.settings.appURL + '/protein/'+ rowData[0]);
+        //window.location.assign(Config.settings.appURL + '/protein/'+ rowData[0]);
+        this.props.history.push('/protein/'+ rowData[0]);
     }
     state = {        
         data : [],

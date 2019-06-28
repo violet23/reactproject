@@ -23,12 +23,7 @@ const styles = theme =>({
     list: {
         width: 900,
       },
-    appBar: { 
-        background: '#f5f5f5' 
-      },
-      appBar2: {  
-        background: '#fff' 
-      },
+
       drawerHeader:{
         display: 'flex',
         alignItems: 'center',
@@ -49,23 +44,30 @@ const styles = theme =>({
 class AppContainer extends React.Component {
     state = {      
         left: false,
-        searchOptions : null,    
+        searchOptions : null,   
         pageData: null,
         data: null,
         publicFilter: '',
         proteinName: '',
         proteinNames: [],
+        theme: this.props.theme,
+        background : this.props.background
         //sampleStatus: ['Public', 'Private', 'All']
     };
 
 
+  
+
     refresh = () =>{
     this.setState({
-      pageData: null
+      pageData: null,
+      theme: this.props.theme,
+      background : this.props.background
     });
     }
 
     componentDidMount(){
+      console.log(this.props)
       const getURL = Config.settings.apiURL + Config.settings.proteinsEndpoint;
       axios.get(getURL).then(res=>{
 
@@ -73,13 +75,21 @@ class AppContainer extends React.Component {
             return protein.proteinName
         });
         console.log(proteinNames);
-        console.log(this.props);
         this.setState({
           searchOptions: proteinNames,
+          theme: this.props.theme,
+          background : this.props.background
         });
         }).catch(err=>{
           console.log(err);        
         });
+    }
+
+    componentWillReceiveProps(nextProps){
+      this.setState({
+        theme: nextProps.theme,
+        background : nextProps.background
+      });
     }
 
     /*updateContent = (protein) => () =>{
@@ -99,9 +109,6 @@ class AppContainer extends React.Component {
         });
       });    
     };*/
-    reload = () =>{
-        window.location.reload();
-      }
 
     openNewTab = () =>{
         var win = window.open(Config.settings.appURL, '_blank');
@@ -109,7 +116,8 @@ class AppContainer extends React.Component {
       }
       render(){
           const {classes} = this.props;
-          const{searchOptions, pageData} = this.state;
+          const{searchOptions, pageData, theme,background} = this.state;
+          console.log(this.state.background)
           const SearchBar = searchOptions
           ? <Search suggestions = {searchOptions} />
           //showing loading status when not connected to database.
@@ -161,7 +169,7 @@ class AppContainer extends React.Component {
                 </CardActions>
                 </Paper>
                 {Page}
-                <Grid item className={classes.center}> 
+                {/*<Grid item className={classes.center}> 
                         <Grid container spacing={40} alignItems={"center"} direction="row" justify="center" className={classes.footer}>
                             <Grid item>
                                 <img src={pennstatelogo} alt="pennstateLogo" style={{width: 160}}/> 
@@ -175,7 +183,7 @@ class AppContainer extends React.Component {
                                 </Typography>
                             </Grid>
                         </Grid>                       
-                    </Grid>
+                    </Grid>*/}
             </div>
         )
 

@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter} from 'react-router-dom';
 //provided components
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -52,6 +53,8 @@ class ProteinContainer extends React.Component {
         publicFilter: '',
         proteinName: '',
         proteinNames: [],
+        theme: this.props.theme,
+        background : this.props.background
         //sampleStatus: ['Public', 'Private', 'All']
     };
 
@@ -66,6 +69,8 @@ class ProteinContainer extends React.Component {
           
         this.setState({
           searchOptions: proteinNames,
+          theme: this.props.theme,
+          background : this.props.background
         });
         }).catch(err=>{
           console.log(err);        
@@ -73,9 +78,15 @@ class ProteinContainer extends React.Component {
         
     }
 
+    componentWillReceiveProps(nextProps){
+      this.setState({
+        theme: nextProps.theme,
+        background : nextProps.background
+      });
+    }
 
     reload = () =>{
-      window.location.assign(Config.settings.appURL);
+      this.props.history.push('/');
       }
 
     openNewTab = () =>{
@@ -84,7 +95,7 @@ class ProteinContainer extends React.Component {
       }
       render(){
           const {classes} = this.props;
-          const{searchOptions, pageData} = this.state;
+          const{searchOptions, pageData,theme,background} = this.state;
           const SearchBar = searchOptions
           ? <Search suggestions = {searchOptions} />
           //showing loading status when not connected to database.
@@ -147,4 +158,5 @@ ProteinContainer.propTypes = {
     classes: PropTypes.object.isRequired,
   };
   
-  export default withStyles(styles)(ProteinContainer);
+  export default withRouter(withStyles(styles)(ProteinContainer));
+  //export default withRouter(ProteinContainer);

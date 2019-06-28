@@ -9,7 +9,9 @@ import Config from '../Config';
 class Searchtable extends React.Component {
     handleRowClick = (rowData, rowMeta) => {
         //redirect to Topic page
-        window.location.assign(Config.settings.appURL + '/'+ rowData[0]);
+        //window.location.assign(Config.settings.appURL + '/'+ rowData[0]);
+        console.log(this.props)
+        this.props.history.push('/'+ rowData[0]);
     }
     state = {        
         data : [],

@@ -10,7 +10,7 @@ class ProteinStatisticsTable extends React.Component {
     
     handleRowClick = (rowData, rowMeta) => {
         //redirect to Topic page
-        window.location.assign(Config.settings.appURL + '/'+rowData[0]);
+        this.props.history.push('/'+ rowData[0]);
     }
     state = {        
         data : [],

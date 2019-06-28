@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter} from 'react-router-dom';
 //provided components
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -13,6 +14,7 @@ import FormatColorIcon from '@material-ui/icons/FormatColorFill';
 //sub components
 import Search from './Search';
 import TopicPage from './TopicPage';
+import TopicGraphPage from './TopicGraphPage';
 //configuration
 import Config from '../Config';
 
@@ -52,10 +54,13 @@ class TopicContainer extends React.Component {
         publicFilter: '',
         proteinName: '',
         proteinNames: [],
+        theme: this.props.theme,
+        background : this.props.background
         //sampleStatus: ['Public', 'Private', 'All']
     };
 
     componentDidMount(){
+      console.log(this.props)
       const topicURL = Config.settings.apiURL + Config.settings.topicsEndpoint;
       const getURL = Config.settings.apiURL + Config.settings.proteinsEndpoint;
       axios.get(getURL).then(res=>{
@@ -63,20 +68,32 @@ class TopicContainer extends React.Component {
           let proteinNames = res.data.proteins.map(protein=>{
             return protein.proteinName
         });
-        console.log(proteinNames);
           
         this.setState({
           searchOptions: proteinNames,
+          theme: this.props.theme,
+          background : this.props.background
         });
         }).catch(err=>{
           console.log(err);        
         });
+        console.log("MyPROPS");
         
+        console.log(this.props);
+        
+        
+    }
+    componentWillReceiveProps(nextProps){
+      this.setState({
+        theme: nextProps.theme,
+        background : nextProps.background
+      });
     }
 
 
     reload = () =>{
-      window.location.assign(Config.settings.appURL);
+      //window.location.assign(Config.settings.appURL);
+      this.props.history.push('/');
       }
 
     openNewTab = () =>{
@@ -85,7 +102,7 @@ class TopicContainer extends React.Component {
       }
       render(){
           const {classes} = this.props;
-          const{searchOptions, pageData} = this.state;
+          const{searchOptions, pageData,theme,background} = this.state;
           const SearchBar = searchOptions
           ? <Search suggestions = {searchOptions} />
           //showing loading status when not connected to database.
@@ -95,11 +112,12 @@ class TopicContainer extends React.Component {
           </Typography>
           //const SearchBar = <Search suggestions = {searchOptions} updateContent={this.updateContent}/>
           const Page = <TopicPage/>
+          const Page2 = <TopicGraphPage/>
           //const Page = <LandingPage updateContent={this.updateContent}/> 
 
         return(
-            <div>
-                <Paper square={true} className = {pageData ? classes.appBar2 : classes.appBar}  elevation = {0}>
+            <div style={{background:this.state.background}}>
+                <Paper  square={true} className = {pageData ? classes.appBar2 : classes.appBar}  elevation = {0}>
                 <CardActions>
                     <Grid container alignItems = {"center"} justify= {"space-between"}>
 
@@ -138,6 +156,7 @@ class TopicContainer extends React.Component {
                 
                 </Paper>
                 {Page}
+                {Page2}
             </div>
         )
 
@@ -148,4 +167,5 @@ TopicContainer.propTypes = {
     classes: PropTypes.object.isRequired,
   };
   
-  export default withStyles(styles)(TopicContainer);
+  export default withRouter(withStyles(styles)(TopicContainer));
+  //export default withRouter(TopicContainer);

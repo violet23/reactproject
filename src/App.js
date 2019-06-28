@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import { Router, browserHistory } from 'react-router'
 // SubComponents
 import AppContainer from './Components/AppContainer';
 import TopicContainer from './Components/TopicContainer';
@@ -66,28 +66,41 @@ const theme2 = createMuiTheme({
 class App extends Component {
 
   state = {
-    isThemeLight: true
+    theme : theme1,
+    background : 'linear-gradient(to bottom,#efefda,#efefda)'
   }
   handleThemeChange = () => {
-    this.setState({ isThemeLight: !this.state.isThemeLight })
+
+    const theme0 =(this.state.theme === theme1) 
+    ? theme2 
+    : theme1;
+
+    const background0 = (this.state.background === 'linear-gradient(to bottom,#efefda,#efefda)')
+    ? 'linear-gradient(to bottom,#ede6e8,#ede6e8)'
+    : 'linear-gradient(to bottom,#efefda,#efefda)';
+
+    this.setState({ 
+      theme : theme0,
+      background : background0 
+    })
+    console.log(this.state)
   }
 
   render() {
-    const { isThemeLight } = this.state;
-    const background = isThemeLight ? 'linear-gradient(to bottom,#efefda,#efefda)' : 'linear-gradient(to bottom,#ede6e8,#ede6e8)'
-
+    const { theme, background } = this.state;
 
     return (
-      <MuiThemeProvider theme={isThemeLight ? theme1 : theme2}>
+      <MuiThemeProvider theme = {this.state.theme}>
       <CssBaseline />
-      <div style={{height: '100%', background: background}}>
+      <div style={{height: '100%', background: this.state.background}}>
         <BrowserRouter>
          
           <Switch>
             <Route exact path='/' 
-            render={() => <AppContainer changeTheme={this.handleThemeChange}/>} />
-            <Route exact path="/:topicName" render={() => <TopicContainer changeTheme={this.handleThemeChange}/>}/>
-            <Route exact path="/protein/:proteinName" render={() => <ProteinContainer changeTheme={this.handleThemeChange}/>}/>
+            render={() => <AppContainer changeTheme={this.handleThemeChange} theme = {this.state.theme} background = {this.state.background}/>} />
+            <Route exact path="/:topicName"
+            render={() => <TopicContainer changeTheme={this.handleThemeChange} theme = {this.state.theme} background = {this.state.background}/>}/>
+            <Route exact path="/protein/:proteinName" render={() => <ProteinContainer changeTheme={this.handleThemeChange} theme = {this.state.theme} background = {this.state.background}/>}/>
             {/*<Route exact path="/try" component={General} /> */}
           </Switch>   
         </BrowserRouter>

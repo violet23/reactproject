@@ -25,7 +25,7 @@ const styles = theme => ({
         // border: '2px solid green'
       },
     card: {
-        minWidth: 1100
+        minWidth: 1200
     },           
     
       searchbar:{
@@ -52,7 +52,7 @@ class TopicPage extends React.Component {
         topicName :  ' Undefined',
         proteinList: 'Undefined',
         loading: true,
-        message: "Fetching Topics",
+        message: "Fetching",
         expanded: false
     }
     
@@ -61,6 +61,23 @@ class TopicPage extends React.Component {
           expanded: !this.state.expanded
         })
     }
+
+
+
+    /*handleProteinClick = (protein) =>{        
+      let url = (protein == null) ? 
+      (  
+        this.state.message
+        
+        ):
+        (Config.settings.appURL + '/protein/'+ protein)
+      console.log(url);
+        //let proteinWin = window.open(url, '_blank');
+        //proteinWin.focus();
+        
+}*/
+
+
     componentDidMount (){
         const topic = window.location.pathname;
         const topicURL = Config.settings.apiURL +Config.settings.topicsEndpoint +topic;
@@ -71,7 +88,7 @@ class TopicPage extends React.Component {
               return topic.topicID
           });
           const proteinList = result.data.topic.map(topic =>{
-              return topic.proteinList.split("\t").join(", ")
+              return topic.proteinList.split("\t").join(', ')
           });
           this.setState({
             topicName: topicID[0],
@@ -90,6 +107,7 @@ class TopicPage extends React.Component {
       render(){  
         const {classes} = this.props;
         const{topicName,proteinList,loading,message,expanded} = this.state;
+        console.log(proteinList.split(', '))
     return (
             <div>
             <div className={classes.jumbotron}>
@@ -100,7 +118,7 @@ class TopicPage extends React.Component {
                             Topic{topicName}
                         </Typography>
                         <Typography gutterBottom variant="h6" component="h5">
-                        Protein list: {proteinList}
+                        Protein List: {proteinList}
                         </Typography>
                         {/*<Grid container spacing={8} alignItems={"center"}>
                                 <Grid item sm={"auto"}>

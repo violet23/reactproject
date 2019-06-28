@@ -5,6 +5,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import NoSsr from '@material-ui/core/NoSsr';
 import TextField from '@material-ui/core/TextField';
@@ -200,7 +201,9 @@ componentDidMount(){
         console.log(value);
       }
       else{
-          window.location.assign(Config.settings.appURL + '/protein/' + value.label);
+          console.log(this.props)
+          //window.location.assign(Config.settings.appURL + '/protein/' + value.label);
+          this.props.history.push('/protein/' + value.label);
         
       }
    
@@ -250,4 +253,5 @@ Search.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(Search);
+export default withRouter(withStyles(styles, { withTheme: true })(Search));
+//export default withRouter(Search);

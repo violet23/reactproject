@@ -93,6 +93,30 @@ class ProteinPage extends React.Component {
     });;  
         
     }
+
+    handleYEPClick = () => {
+      const protein = (window.location.pathname).split("/")[2];
+      
+      const proteinURL = Config.settings.apiURL +Config.settings.proteinsEndpoint +"/" + protein;
+      console.log(proteinURL);
+      axios.get(proteinURL).then(result=>{
+      const yepID = result.data.protein.map(protein =>{
+          return protein.proteinName
+      });
+      let url = "https://mars.vmhost.psu.edu/yep/" + yepID;
+      console.log(yepID);
+      console.log(url);
+      let yepWin = window.open(url, '_blank');
+      yepWin.focus();
+  }).catch(error =>{
+      console.log(error);
+      this.setState({
+          loading: true,
+          message: error.message
+      })
+  });;  
+      
+  }
     
 
     componentDidMount (){
@@ -162,6 +186,12 @@ class ProteinPage extends React.Component {
                                         <Button size="small" color="primary" onClick={this.handleSGDClick}>
                                         <LaunchIcon className={classes.leftIcon} />
                                         view on SGD
+                                        </Button>
+                    </Tooltip>
+                    <Tooltip title="YEP Page" aria-label="Go to YEP Page">
+                                        <Button size="small" color="primary" onClick={this.handleYEPClick}>
+                                        <LaunchIcon className={classes.leftIcon} />
+                                        view on YEP
                                         </Button>
                     </Tooltip>
                     {/*<Button size="small">

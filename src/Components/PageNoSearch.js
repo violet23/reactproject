@@ -56,7 +56,7 @@ const PageNoSearch = (props) =>{
                 <div className={classes.jumbotron}>
                     <div className={classes.container}>
                     <Typography variant="h2" gutterBottom>
-                            Yeast Topic Project
+                            YEP Topic Project
                         </Typography>
                         
                         <Typography variant="subtitle1" gutterBottom>
@@ -79,7 +79,7 @@ const PageNoSearch = (props) =>{
                     </Grid>}
                     
                     
-                     {/*Footer  Section 
+                     {/*Footer  Section*/ 
                      <Grid item className={classes.center}> 
                         <Grid container spacing={40} alignItems={"center"} direction="row" justify="center" className={classes.footer}>
                             <Grid item>
@@ -94,7 +94,7 @@ const PageNoSearch = (props) =>{
                                 </Typography>
                             </Grid>
                         </Grid>                       
-                    </Grid>*/}
+                    </Grid>}
 
                 </Grid>                
             </div>
