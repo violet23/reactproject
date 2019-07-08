@@ -60,7 +60,6 @@ class TopicContainer extends React.Component {
     };
 
     componentDidMount(){
-      console.log(this.props)
       const topicURL = Config.settings.apiURL + Config.settings.topicsEndpoint;
       const getURL = Config.settings.apiURL + Config.settings.proteinsEndpoint;
       axios.get(getURL).then(res=>{
@@ -77,9 +76,7 @@ class TopicContainer extends React.Component {
         }).catch(err=>{
           console.log(err);        
         });
-        console.log("MyPROPS");
         
-        console.log(this.props);
         
         
     }

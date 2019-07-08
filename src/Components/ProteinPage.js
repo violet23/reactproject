@@ -66,7 +66,6 @@ class ProteinPage extends React.Component {
     }
     
     handleExpandClick= () =>{
-        console.log(this.state.expanded)
         this.setState({
           expanded: !this.state.expanded
         })

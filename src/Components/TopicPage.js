@@ -107,7 +107,6 @@ class TopicPage extends React.Component {
       render(){  
         const {classes} = this.props;
         const{topicName,proteinList,loading,message,expanded} = this.state;
-        console.log(proteinList.split(', '))
     return (
             <div>
             <div className={classes.jumbotron}>

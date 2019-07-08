@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import comingup from '../comingup.png';
 
 const styles = theme => ({
   jumbotron:{
@@ -27,12 +28,18 @@ const styles = theme => ({
         width: 1100
       },
       forbottom:{
-          width: 200,     
+          width: 280,     
         //   border: '2px solid yellow'
       },
       fortop:{
-        width: 500,     
+        width: 320,     
       //   border: '2px solid yellow'
+    },
+    leftSection: {
+      // border: '2px solid gray'
+    },
+    rightSection:{
+      // border: '2px solid blue'
     },
       mainContainer:{
           overflow: 'scroll'
@@ -46,26 +53,28 @@ class General extends React.Component {
   state ={
     topicTagCountsInSubsectors: this.props.topic.topicTagCountsInSubsectors,
     subsectorPicture: this.props.topic.subsectorPicture,
-    stringPicture: this.props.topic.stringPicture
+    //stringPicture: this.props.topic.stringPicture
     }
     
     componentDidMount(){
         this.setState({
-            topicTagCountsInSubsectors: this.props.topic.topicTagCountsInSubsectors,
-            subsectorPicture: this.props.topic.subsectorPicture,
-            stringPicture: this.props.topic.stringPicture
+          topicTagCountsInSubsectors: this.props.topic.topicTagCountsInSubsectors,
+          subsectorPicture: this.props.topic.subsectorPicture,
+            //stringPicture: this.props.topic.stringPicture
     });}
 
     componentWillReceiveProps(nextProps){
         this.setState({
             topicTagCountsInSubsectors: nextProps.topic.topicTagCountsInSubsectors,
             subsectorPicture: nextProps.topic.subsectorPicture,
-            stringPicture: nextProps.topic.stringPicture
+            //stringPicture: nextProps.topic.stringPicture
     });
       }
 
       render(){  
         const {classes} = this.props;
+        const topicTagCountsInSubsectors = "http://localhost:8080/"+this.state.topicTagCountsInSubsectors.split('./')[1];
+        const subsectorPicture = "http://localhost:8080/"+this.state.subsectorPicture.split('./')[1];
         //const{topicTagCountsInSubsectors} = this.state;
     return (
             <div>
@@ -75,37 +84,32 @@ class General extends React.Component {
                     <Typography variant="h5" paragraph={true}>
                             General
                         </Typography>
-                    <Paper>  
-
-                      <CardContent className={classes.sectionHolder}>
-                      
-                          <Grid container spacing={10} direction="column" wrap="nowrap" 
-                            justify="center" className={classes.mainContainer}>
-
-                              {/* Buffer Section */}
+                <Paper>  
+                <CardContent className={classes.sectionHolder}>   
                               {/* Bottom Section */}                             
-                              <Grid container 
+                          <Grid container 
                                     direction="row"
-                                    justify="center"
+                                    justify="space-evenly"
                                     alignItems="center"
-                                    spacing={0}
-                              >
-                              
+                                    spacing={8}
+                              >                       
+                              {/*<Grid item >
+                                  <img src={this.state.stringPicture} alt="String Picture"
+                                  className={classes.forbottom}/>
+                              </Grid>*/}
                               <Grid item >
-                                  <img src={this.state.topicTagCountsInSubsectors} alt="Topic Tag Counts In Subsectors"
+                                  <img src={topicTagCountsInSubsectors} alt="Topic Tag Counts In Subsectors"
                                   className = {classes.fortop}/>
                               </Grid>
                               <Grid item >
-                                  <img src={this.state.subsectorPicture} alt="Subsector Picture"
+                                  <img src={subsectorPicture} alt="Subsector Picture"
                                   className={classes.forbottom}/>
                               </Grid>
-                              {<Grid item >
-                                  <img src={this.state.stringPicture} alt="String Picture"
-                                  className={classes.forbottom}/>
-                              </Grid>}
+                              <Grid item>
+                                <img src={comingup} alt="comingup" className = {classes.forbottom}/>
                               </Grid>
-                            </Grid>               
 
+                            </Grid>             
                   </CardContent>
 
                   </Paper> 

@@ -9,6 +9,11 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import Config from '../Config';
 import General from './General';
+import Profiles from './Profiles';
+import Gene from './Gene';
+import Reference from './Reference';
+import Motif from './Motif'
+
 const styles = theme => ({
   jumbotron:{
     padding: '1rem 2rem',
@@ -21,7 +26,8 @@ const styles = theme => ({
         // border: '2px solid green'
       },
     card: {
-        minWidth: 1200
+        maxWidth: 1200
+        
     },           
     
       searchbar:{
@@ -50,7 +56,6 @@ class TopicGraphPage extends React.Component {
             topic : topic[0],
             loading: false
           });
-          console.log(topic)
           //const Page = <Try why = {topicTagCountsInSubsectors}/>
         }).catch(error =>{
             console.log(error);
@@ -64,7 +69,6 @@ class TopicGraphPage extends React.Component {
       render(){  
         const {classes} = this.props;
         const{topic,loading,message,} = this.state;
-        console.log(this.state.topic)
         const TopicGraph = loading ? (  
             <Typography component="div" >                   
                 <Typography component="p" variant="subtitle1" >
@@ -74,12 +78,28 @@ class TopicGraphPage extends React.Component {
             </Typography> 
             
             ) : (<General topic = {this.state.topic}/>);
+
+        const pp = loading ? (  
+          <Typography component="div" >                   
+              <Typography component="p" variant="subtitle1" >
+                  {message}
+              </Typography>
+              <LinearProgress variant="query" />
+          </Typography> 
+          
+          ) : (<Profiles topic = {this.state.topic}/>);
+        const genes = <Gene/>;
+        const refer = <Reference/>;
+        const motif = <Motif/>
     return (
         <div className={classes.root}>
             <Grid container justify = "center">
                 <Paper className={classes.card}>   
                     {TopicGraph}
-                    {TopicGraph}
+                    {pp}
+                    {genes}
+                    {refer}
+                    {motif}
                 </Paper>
                     
                     
