@@ -28,18 +28,14 @@ const styles = theme => ({
         width: 1100
       },
       forbottom:{
-          width: 280,     
+          width: 270,     
+          height:180,
         //   border: '2px solid yellow'
       },
       fortop:{
-        width: 320,     
+        width: 280,     
+        height:300,
       //   border: '2px solid yellow'
-    },
-    leftSection: {
-      // border: '2px solid gray'
-    },
-    rightSection:{
-      // border: '2px solid blue'
     },
       mainContainer:{
           overflow: 'scroll'
@@ -84,19 +80,15 @@ class General extends React.Component {
                     <Typography variant="h5" paragraph={true}>
                             General
                         </Typography>
-                <Paper>  
+                <Paper elevation={4}>  
                 <CardContent className={classes.sectionHolder}>   
                               {/* Bottom Section */}                             
                           <Grid container 
                                     direction="row"
                                     justify="space-evenly"
                                     alignItems="center"
-                                    spacing={8}
+                                    spacing={0}
                               >                       
-                              {/*<Grid item >
-                                  <img src={this.state.stringPicture} alt="String Picture"
-                                  className={classes.forbottom}/>
-                              </Grid>*/}
                               <Grid item >
                                   <img src={topicTagCountsInSubsectors} alt="Topic Tag Counts In Subsectors"
                                   className = {classes.fortop}/>

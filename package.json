@@ -1,11 +1,11 @@
 {
-  "name": "yepfrontend",
+  "name": "yep_topicfrontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.9.3",
+    "@material-ui/core": "^4.2.0",
     "@material-ui/icons": "^3.0.2",
-    "autosuggest-highlight": "^3.1.1",
+    "autosuggest-highlight": "latest",
     "axios": "^0.18.0",
     "clsx": "^1.0.4",
     "mui-datatables": "^2.0.0-beta.59",

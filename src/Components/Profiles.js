@@ -12,12 +12,16 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
 import comingup from '../comingup.png';
+import { log } from 'util';
 
 const styles = theme => ({
   jumbotron:{
     padding: '1rem 1rem',
     bottomMargin:'1rem',     
 },
+  tagpaper:{
+      width: 150
+  },
     center : {
         margin: 'auto',      
         maxWidth: 1100,
@@ -39,23 +43,20 @@ const styles = theme => ({
       marginBottom:20,
     //   border: '2px solid yellow'
   },  
-    
+  featureHeatmapbar:{
+      width: 10,
+      height:180,
+      marginTop:20,
+      marginBottom:20,
+  },
+  myColor:{
+    background: 'black'
+  },
       searchbar:{
         width: 1100
       },
-      forbottom:{
-          width: 280,     
-        //   border: '2px solid yellow'
-      },
-      fortop:{
-        width: 320,     
-      //   border: '2px solid yellow'
-    },
-    leftSection: {
-      // border: '2px solid gray'
-    },
-    rightSection:{
-      // border: '2px solid blue'
+    scroller:{
+      overflow: "hidden"
     },
       mainContainer:{
           overflow: 'scroll'
@@ -66,17 +67,13 @@ const styles = theme => ({
         marginTop:14,
         marginLeft: -15   
       },
-    
 });
 
 
 class Profiles extends React.Component { 
   state = {
     selectTab :0,
-    imageURL:{
-    bindingRegionProfiles: this.props.topic.bindingRegionProfiles[0],
-    tssProfiles: this.props.topic.tssProfiles[0],
-    tesProfiles : this.props.topic.tesProfiles[0]},
+    imageURL:this.props.topic.bindingRegionProfiles[0]
   }
 
   /*componentDidMount(){
@@ -91,10 +88,7 @@ class Profiles extends React.Component {
   componentWillReceiveProps(nextProps){
     this.setState({
       selectTab :0,
-      imageURL:{
-      bindingRegionProfiles: nextProps.topic.bindingRegionProfiles[0],
-      tssProfiles: nextProps.topic.tssProfiles[0],
-      tesProfiles : nextProps.topic.tesProfiles[0]},
+      imageURL: nextProps.topic.bindingRegionProfiles[0]
         //stringPicture: nextProps.topic.stringPicture
   });
   }
@@ -103,40 +97,101 @@ class Profiles extends React.Component {
     
     selectedTab === 0 ? this.setState({
         selectedTab: selectedTab,
-        imageURL: {average_topic: this.props.topic.bindingRegionProfiles[0]}
+        imageURL: this.props.topic.bindingRegionProfiles[0]
     }) : 
     this.setState({
         selectedTab: selectedTab,
-        imageURL: {average_topic: this.props.topic.tssProfiles[0]},
+        imageURL: this.props.topic.tssProfiles[0]
     })
   };*/
+  handleChange = (event, selectedTab) => {
+    
+    switch(selectedTab) {
+        case 1:
+          console.log(selectedTab);
+          
+            this.setState({
+              selectTab: selectedTab,
+              imageURL: this.props.topic.tssProfiles[0]
+            });
+          break;
+        case 2:
+        this.setState({
+            selectTab: selectedTab,
+            imageURL: this.props.topic.tesProfiles[0]
+        })
+        break;
+        default:
+            this.setState({
+              selectTab: selectedTab,
+              imageURL: this.props.topic.bindingRegionProfiles[0]
+            })
+      }
+  };
 
   render(){ 
     const {classes} = this.props;
-    const{tabContent} = this.state;
-    const bindingRegionProfiles = this.state.imageURL.bindingRegionProfiles;
+    //const{tabContent} = this.state;
+    const {imageURL} = this.state;
     const topicID = this.props.topic.topicID;
     const proteinList = this.props.topic.proteinList.split('\t');
-    let BRPpics_average = proteinList.map((protein)=>("http://localhost:8080/" + bindingRegionProfiles.averagePlot[0][protein]));
-    let BRPpics_heatmap= proteinList.map((protein)=>("http://localhost:8080/" + bindingRegionProfiles.heatmap[0][protein]));
-       
+    let averagePics = proteinList.map((protein)=>("http://localhost:8080/" + imageURL.averagePlot[0][protein]));
+    let heatmapPics= proteinList.map((protein)=>("http://localhost:8080/" + imageURL.heatmap[0][protein]));
+    let heatmap3 = proteinList.map((protein)=>("http://localhost:8080/" + imageURL.heatmap3category[0][protein]));
+    console.log(imageURL);
+    
+    const heatmap3category = this.state.selectTab === 0
+        ?(<CardContent > 
+          <Typography>
+            No heatmap3category pics
+          </Typography>
+          </CardContent>)
+        :(<Grid container direction="row"
+              justify="flex-start"
+              alignItems="flex-start"
+              spacing={0}
+              className={classes.mainContainer}
+            >                       
+
+            <Grid item >
+              <img src={"http://localhost:8080/" + imageURL.heatmap3categoryBar} alt="heatmap3"
+              className={classes.featureHeatmapbar}/>
+            </Grid>
+
+            <Grid item >
+              <img src={"http://localhost:8080/" + imageURL.heatmap3category[0][topicID]} alt="heatmap3"
+              className={classes.featureHeatmap}/>
+            </Grid>
+            
+
+            <Grid item >
+              {heatmap3.map(item =>(
+                <img
+              src = {item}
+              alt="heatmap3" 
+              className={classes.featureHeatmap}
+              />
+              ))}
+            </Grid>
+
+          </Grid>)  
+     
     return (
             <div className={classes.largecard}>
-              
                 <Grid container justify = "center">
                   <Paper elevation={0} className={classes.card}>
                         <Typography variant="h5" paragraph={true}>
                                 Profiles
                             </Typography>
-                    <Paper>  
+                            
+                    <Paper elevation={4}>  
                         <Tabs
-                          value={tabContent}
-                          //onChange={this.handleChange}
-                          indicatorColor="primary"
-                          textColor="primary"
+                          value={this.state.selectTab}
+                          onChange={this.handleChange}
                           variant="scrollable"
-                          scrollButtons="on"            
-                          classes={{scrollable:classes.scroller}}   
+                          scrollButtons="on"
+                          textColor="primary" 
+                          classes={{scrollable:classes.scroller, indicator:classes.myColor}}  
                         >
                           <Tab label="Binding Region Profiles" key={0} />
                           <Tab label="TSS Profiles" key={1} />
@@ -145,8 +200,24 @@ class Profiles extends React.Component {
                         <Divider/>
 
                     <CardContent className = {classes.card}>   
-                                  {/* Bottom Section */}          
-                        <Typography component="div" >                       
+                      <Typography component="div" >                       
+                              <Grid container direction="row" spacing={32}>
+                                  <Paper className={classes.tagpaper} elevation = {0}>
+                                      <Typography align = 'center'>
+                                               Topic-{topicID}
+                                      </Typography>
+                                  </Paper>
+                                  {proteinList.map(item =>(
+                                    <Paper className={classes.tagpaper} elevation = {0}>
+                                      <Typography align = 'center'>
+                                               {item}
+                                      </Typography>
+                                    </Paper>
+                                    ))} 
+                              </Grid>
+
+                              
+
                               <Grid container 
                                     direction="row"
                                     justify="flex-start"
@@ -154,20 +225,22 @@ class Profiles extends React.Component {
                                     spacing={0}
                                     className={classes.mainContainer}
                                   >                       
-                                  {<Grid item >
-                                    <img src={"http://localhost:8080/" + bindingRegionProfiles.averagePlot[0][topicID]} alt="bindingRegionProfiles"
+                                  <Grid item >
+                                    <img src={"http://localhost:8080/" + imageURL.averagePlot[0][topicID]} alt="average"
                                     className={classes.featureHeatmap}/>
-                                  </Grid>}
-                                  {<Grid item >
-                                    {BRPpics_average.map(item =>(
+                                  </Grid>
+                                  
+                                  <Grid item >
+                                    {averagePics.map(item =>(
                                       <img
-                                    src = {item}
-                                    alt="bindingRegionProfiles" 
-                                    className={classes.featureHeatmap}
-                                    />
+                                        src = {item}
+                                        alt="average" 
+                                        className={classes.featureHeatmap}
+                                      />
+                                          
                                     ))}
                                     
-                                  </Grid>}
+                                  </Grid>
                               </Grid>   
 
                               <Divider/>
@@ -179,25 +252,32 @@ class Profiles extends React.Component {
                                     spacing={0}
                                     className={classes.mainContainer}
                                   >                       
-                                  {<Grid item >
-                                    <img src={"http://localhost:8080/" + bindingRegionProfiles.heatmap[0][topicID]} alt="bindingRegionProfiles"
+                                  <Grid item >
+                                    <img src={"http://localhost:8080/" + imageURL.heatmap[0][topicID]} alt="heatmap"
                                     className={classes.featureHeatmap}/>
-                                  </Grid>}
+                                  </Grid>
                                   
-                                  {<Grid item >
-                                    {BRPpics_heatmap.map(item =>(
+                                  <Grid item >
+                                    {heatmapPics.map(item =>(
                                       <img
                                     src = {item}
                                     alt="heatmap" 
                                     className={classes.featureHeatmap}
                                     />
                                     ))}
-                                  </Grid>}
-                              </Grid>   
+                                  </Grid>
+
+                              </Grid>
+
+                              <Divider/>
+
+                              {heatmap3category}
+
                         </Typography>          
                       </CardContent>
                       </Paper> 
-                    </Paper> 
+                      </Paper> 
+                    
                         
                     
                 </Grid>

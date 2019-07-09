@@ -88,16 +88,33 @@ class TopicGraphPage extends React.Component {
           </Typography> 
           
           ) : (<Profiles topic = {this.state.topic}/>);
-        const genes = <Gene/>;
+
+        const genes = loading ? (  
+          <Typography component="div" >                   
+              <Typography component="p" variant="subtitle1" >
+                  {message}
+              </Typography>
+              <LinearProgress variant="query" />
+          </Typography> 
+          ) : (<Gene topic = {this.state.topic}/>);
+
+
         const refer = <Reference/>;
         const motif = <Motif/>
     return (
         <div className={classes.root}>
             <Grid container justify = "center">
                 <Paper className={classes.card}>   
-                    {TopicGraph}
-                    {pp}
-                    {genes}
+                  <Grid item>
+                  {TopicGraph}
+                  </Grid>
+                  <Grid item>
+                  {pp}
+                  </Grid>
+                  <Grid item>
+                  {genes}
+                  </Grid>
+                    
                     {refer}
                     {motif}
                 </Paper>

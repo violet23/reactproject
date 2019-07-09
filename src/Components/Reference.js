@@ -35,12 +35,6 @@ const styles = theme => ({
         width: 320,     
       //   border: '2px solid yellow'
     },
-    leftSection: {
-      // border: '2px solid gray'
-    },
-    rightSection:{
-      // border: '2px solid blue'
-    },
       mainContainer:{
           overflow: 'scroll'
       },
