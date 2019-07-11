@@ -81,7 +81,7 @@ const PageNoSearch = (props) =>{
                     
                      {/*Footer  Section*/ 
                      <Grid item className={classes.center}> 
-                        <Grid container spacing={40} alignItems={"center"} direction="row" justify="center" className={classes.footer}>
+                        <Grid container spacing={10} alignItems={"center"} direction="row" justify="center" className={classes.footer}>
                             <Grid item>
                                 <img src={pennstatelogo} alt="pennstateLogo" style={{width: 160}}/> 
                             </Grid>

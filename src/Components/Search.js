@@ -25,7 +25,7 @@ const styles = theme => ({
   },
   input: {
     display: 'flex',
-    padding: 8,
+    padding: 11,
     border: `1px solid ${theme.palette.primary[300]}`,    
   },
   valueContainer: {
@@ -36,7 +36,7 @@ const styles = theme => ({
     overflow: 'hidden',
   }, 
   noOptionsMessage: {
-    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+    padding: `${theme.spacing(2)}px ${theme.spacing(2)}px`,
   },
   singleValue: {
     fontSize: 16,
@@ -49,7 +49,7 @@ const styles = theme => ({
   paper: {
     position: 'absolute',
     zIndex: 999,
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(2),
     left: 0,
     right: 0,
   },
@@ -83,7 +83,7 @@ function Control(props) {
         inputComponent,
         inputProps: {
           className: props.selectProps.classes.input,
-          inputRef: props.innerRef,
+          //inputRef: props.innerRef,
           children: props.children,
           ...props.innerProps,
         },
@@ -188,7 +188,7 @@ componentDidMount(){
 
       
       // Setting the title of the browser tab
-      document.title = "Yeast Epigenome Project | YEP"
+      document.title = "YEP Topic Project"
 }
 
   handleChange = name => value => {

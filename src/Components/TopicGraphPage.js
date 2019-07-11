@@ -11,7 +11,6 @@ import Config from '../Config';
 import General from './General';
 import Profiles from './Profiles';
 import Gene from './Gene';
-import Reference from './Reference';
 import Motif from './Motif'
 
 const styles = theme => ({
@@ -98,9 +97,15 @@ class TopicGraphPage extends React.Component {
           </Typography> 
           ) : (<Gene topic = {this.state.topic}/>);
 
+        const motif = loading? (  
+          <Typography component="div" >                   
+              <Typography component="p" variant="subtitle1" >
+                  {message}
+              </Typography>
+              <LinearProgress variant="query" />
+          </Typography> 
+          ) : (<Motif topic = {this.state.topic}/>);
 
-        const refer = <Reference/>;
-        const motif = <Motif/>
     return (
         <div className={classes.root}>
             <Grid container justify = "center">
@@ -112,11 +117,9 @@ class TopicGraphPage extends React.Component {
                   {pp}
                   </Grid>
                   <Grid item>
-                  {genes}
+                  {motif}
                   </Grid>
                     
-                    {refer}
-                    {motif}
                 </Paper>
                     
                     

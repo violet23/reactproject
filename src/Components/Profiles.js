@@ -12,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
 import comingup from '../comingup.png';
-import { log } from 'util';
 
 const styles = theme => ({
   jumbotron:{
@@ -48,6 +47,7 @@ const styles = theme => ({
       height:180,
       marginTop:20,
       marginBottom:20,
+
   },
   myColor:{
     background: 'black'
@@ -135,10 +135,12 @@ class Profiles extends React.Component {
     const {imageURL} = this.state;
     const topicID = this.props.topic.topicID;
     const proteinList = this.props.topic.proteinList.split('\t');
-    let averagePics = proteinList.map((protein)=>("http://localhost:8080/" + imageURL.averagePlot[0][protein]));
+    let averagePics = proteinList.map(protein =>(
+      "http://localhost:8080/" + imageURL.averagePlot[0][protein]
+    ));
     let heatmapPics= proteinList.map((protein)=>("http://localhost:8080/" + imageURL.heatmap[0][protein]));
     let heatmap3 = proteinList.map((protein)=>("http://localhost:8080/" + imageURL.heatmap3category[0][protein]));
-    console.log(imageURL);
+    console.log(averagePics);
     
     const heatmap3category = this.state.selectTab === 0
         ?(<CardContent > 
@@ -201,12 +203,13 @@ class Profiles extends React.Component {
 
                     <CardContent className = {classes.card}>   
                       <Typography component="div" >                       
-                              <Grid container direction="row" spacing={32}>
-                                  <Paper className={classes.tagpaper} elevation = {0}>
+                              <Grid container direction="row" >
+                                <Paper className={classes.tagpaper} elevation = {0}>
                                       <Typography align = 'center'>
                                                Topic-{topicID}
                                       </Typography>
-                                  </Paper>
+                                  </Paper> 
+                                 
                                   {proteinList.map(item =>(
                                     <Paper className={classes.tagpaper} elevation = {0}>
                                       <Typography align = 'center'>
@@ -224,12 +227,14 @@ class Profiles extends React.Component {
                                     alignItems="flex-start"
                                     spacing={0}
                                     className={classes.mainContainer}
-                                  >                       
+                                  >     
+                                                   
                                   <Grid item >
                                     <img src={"http://localhost:8080/" + imageURL.averagePlot[0][topicID]} alt="average"
                                     className={classes.featureHeatmap}/>
                                   </Grid>
-                                  
+                                
+                                 
                                   <Grid item >
                                     {averagePics.map(item =>(
                                       <img
