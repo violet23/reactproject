@@ -14,6 +14,7 @@ import FormatColorIcon from '@material-ui/icons/FormatColorFill';
 //sub components
 import Search from './Search';
 import ProteinPage from './ProteinPage';
+import ProteinGraphPage from './ProteinGraphPage'
 //configuration
 import Config from '../Config';
 
@@ -105,6 +106,7 @@ class ProteinContainer extends React.Component {
           </Typography>
           //const SearchBar = <Search suggestions = {searchOptions} updateContent={this.updateContent}/>
           const Page = <ProteinPage/>
+          const Page2 = <ProteinGraphPage/>
           //const Page = <LandingPage updateContent={this.updateContent}/> 
 
         return(
@@ -148,6 +150,7 @@ class ProteinContainer extends React.Component {
                 
                 </Paper>
                 {Page}
+                {Page2}
             </div>
         )
 

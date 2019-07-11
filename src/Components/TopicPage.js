@@ -42,8 +42,6 @@ const styles = theme => ({
       expandOpen: {
         transform: 'rotate(0deg)',
       },
-       
-    
 });
 
 

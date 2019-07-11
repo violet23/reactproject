@@ -17,7 +17,6 @@ import LaunchIcon from '@material-ui/icons/Launch';
 import Config from '../Config';
 import ProteinStatisticsTable from './ProteinStatisticsTable'
 const styles = theme => ({
-          
   jumbotron:{
     padding: '1rem 2rem',
     bottomMargin:'2rem',     
@@ -29,12 +28,10 @@ const styles = theme => ({
         // border: '2px solid green'
       },
     card: {
-        maxWidth: 1100,
-        minWidth: 1100
+        minWidth: 1200,
+        maxWidth: 1200
     },           
-      navbar:{
-        
-      },
+    
       searchbar:{
         width: 1100
       },
@@ -48,10 +45,7 @@ const styles = theme => ({
       expandOpen: {
         transform: 'rotate(0deg)',
       },
-       
-    
 });
-
 
 
 class ProteinPage extends React.Component {
@@ -59,7 +53,6 @@ class ProteinPage extends React.Component {
         proteinName :  ' Undefined',
         topicList: 'Undefined',
         description: "Undefined",
-        sgdID: "Undefined",
         loading: true,
         message: "Fetching Topics",
         expanded: false
@@ -71,27 +64,6 @@ class ProteinPage extends React.Component {
         })
     }
 
-    handleSGDClick = () => {
-        const protein = (window.location.pathname).split("/")[2];
-        
-        const proteinURL = Config.settings.apiURL +Config.settings.proteinsEndpoint +"/" + protein;
-        console.log(proteinURL);
-        axios.get(proteinURL).then(result=>{
-        const sgdID = result.data.protein.map(protein =>{
-            return protein.sgdID
-        });
-        let url = "https://www.yeastgenome.org/locus/" + sgdID;
-        let sgdWin = window.open(url, '_blank');
-        sgdWin.focus();
-    }).catch(error =>{
-        console.log(error);
-        this.setState({
-            loading: true,
-            message: error.message
-        })
-    });;  
-        
-    }
 
     handleYEPClick = () => {
       const protein = (window.location.pathname).split("/")[2];
@@ -181,12 +153,6 @@ class ProteinPage extends React.Component {
                     </CardContent>
                     <Divider variant="middle"/>
                     <CardActions>
-                    <Tooltip title="Saccharomyces Genome Database" aria-label="Go to Saccharomyces Genome Database">
-                                        <Button size="small" color="primary" onClick={this.handleSGDClick}>
-                                        <LaunchIcon className={classes.leftIcon} />
-                                        view on SGD
-                                        </Button>
-                    </Tooltip>
                     <Tooltip title="YEP Page" aria-label="Go to YEP Page">
                                         <Button size="small" color="primary" onClick={this.handleYEPClick}>
                                         <LaunchIcon className={classes.leftIcon} />
