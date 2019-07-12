@@ -29,7 +29,9 @@ const styles = theme => ({
       },
     card: {
         maxWidth: 1100,
-        minWidth: 1100
+        marginTop:20,
+        minWidth: 1100,
+        
     },    
     largecard: {
       maxWidth: 1200,
@@ -56,7 +58,7 @@ const styles = theme => ({
         width: 1100
       },
     scroller:{
-      overflow: "hidden"
+      overflow: 'scroll'
     },
       mainContainer:{
           overflow: 'scroll'
@@ -140,7 +142,6 @@ class Profiles extends React.Component {
     ));
     let heatmapPics= proteinList.map((protein)=>("http://localhost:8080/" + imageURL.heatmap[0][protein]));
     let heatmap3 = proteinList.map((protein)=>("http://localhost:8080/" + imageURL.heatmap3category[0][protein]));
-    console.log(averagePics);
     
     const heatmap3category = this.state.selectTab === 0
         ?(<CardContent > 
@@ -153,6 +154,7 @@ class Profiles extends React.Component {
               alignItems="flex-start"
               spacing={0}
               className={classes.mainContainer}
+              classes={{scrollable:classes.scroller}} 
             >                       
 
             <Grid item >
@@ -181,7 +183,7 @@ class Profiles extends React.Component {
     return (
             <div className={classes.largecard}>
                 <Grid container justify = "center">
-                  <Paper elevation={0} className={classes.card}>
+                  <Paper elevation={0} className={classes.card} >
                         <Typography variant="h5" paragraph={true}>
                                 Profiles
                             </Typography>
@@ -201,7 +203,7 @@ class Profiles extends React.Component {
                         </Tabs>
                         <Divider/>
 
-                    <CardContent className = {classes.card}>   
+                    <CardContent className = {classes.card} classes={{scrollable:classes.scroller}} >   
                       <Typography component="div" >                       
                               <Grid container direction="row" >
                                 <Paper className={classes.tagpaper} elevation = {0}>
@@ -227,14 +229,14 @@ class Profiles extends React.Component {
                                     alignItems="flex-start"
                                     spacing={0}
                                     className={classes.mainContainer}
+                                    classes={{scrollable:classes.scroller}} 
                                   >     
                                                    
                                   <Grid item >
                                     <img src={"http://localhost:8080/" + imageURL.averagePlot[0][topicID]} alt="average"
                                     className={classes.featureHeatmap}/>
                                   </Grid>
-                                
-                                 
+                                  
                                   <Grid item >
                                     {averagePics.map(item =>(
                                       <img
@@ -256,6 +258,7 @@ class Profiles extends React.Component {
                                     alignItems="flex-start"
                                     spacing={0}
                                     className={classes.mainContainer}
+                                    classes={{scrollable:classes.scroller}} 
                                   >                       
                                   <Grid item >
                                     <img src={"http://localhost:8080/" + imageURL.heatmap[0][topicID]} alt="heatmap"

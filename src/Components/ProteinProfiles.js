@@ -209,14 +209,14 @@ class ProteinProfiles extends React.Component {
                               <Grid container direction="row" >
                                 <Paper className={classes.tagpaper} elevation = {0}>
                                       <Typography align = 'center'>
-                                               Protein-{proteinName}
+                                               {proteinName}
                                       </Typography>
                                   </Paper> 
                                  
                                   {topicList.map(item =>(
                                     <Paper className={classes.tagpaper} elevation = {0}>
                                       <Typography align = 'center'>
-                                               {item}
+                                               Topic-{item}
                                       </Typography>
                                     </Paper>
                                     ))} 

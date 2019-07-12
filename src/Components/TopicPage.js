@@ -13,6 +13,9 @@ import Grid from '@material-ui/core/Grid';
 import Collapse from '@material-ui/core/Collapse';
 import Config from '../Config';
 import TopicStatisticsTable from './TopicStatisticsTable'
+import Tooltip from '@material-ui/core/Tooltip';
+import DownloadIcon from '@material-ui/icons/GetApp';
+
 const styles = theme => ({
   jumbotron:{
     padding: '1rem 2rem',
@@ -39,9 +42,23 @@ const styles = theme => ({
           duration: theme.transitions.duration.shortest,
         }),
       },
+      collapse: {
+        transform: 'rotate(0deg)',
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+          duration: theme.transitions.duration.shortest,
+        }),
+      },
       expandOpen: {
         transform: 'rotate(0deg)',
       },
+      leftIcon: {
+        marginRight: theme.spacing(0)
+        // fontSize: 25,
+      },  
+      smallcard:{
+        maxWidth: 10
+      }
 });
 
 
@@ -50,9 +67,12 @@ class TopicPage extends React.Component {
   state ={
         topicName :  ' Undefined',
         proteinList: 'Undefined',
+        genelist: "Undefined",
+        wigFile: "Undefined",
         loading: true,
         message: "Fetching",
-        expanded: false
+        expanded: false,
+
     }
     
     handleExpandClick= () =>{
@@ -60,27 +80,24 @@ class TopicPage extends React.Component {
           expanded: !this.state.expanded
         })
     }
+    handlewigDownloadClick = () => {
+      //console.log(this.state.wigFile)
+      var win = window.open(this.state.wigFile);
+        win.focus();
 
-
-
-    /*handleProteinClick = (protein) =>{        
-      let url = (protein == null) ? 
-      (  
-        this.state.message
+    }
+    handlegeneDownloadClick = () => {
+      //console.log(this.state.genelist)
+      var win = window.open(this.state.genelist);
+        win.focus();
         
-        ):
-        (Config.settings.appURL + '/protein/'+ protein)
-      console.log(url);
-        //let proteinWin = window.open(url, '_blank');
-        //proteinWin.focus();
-        
-}*/
+    }
+
 
 
     componentDidMount (){
         const topic = window.location.pathname;
         const topicURL = Config.settings.apiURL +Config.settings.topicsEndpoint +topic;
-        console.log(topicURL);
         
         axios.get(topicURL).then(result=>{
           let topicID = result.data.topic.map(topic =>{
@@ -89,10 +106,18 @@ class TopicPage extends React.Component {
           const proteinList = result.data.topic.map(topic =>{
               return topic.proteinList.split("\t").join(', ')
           });
+          const genelist = result.data.topic.map(topic =>{
+            return "http://localhost:8080/"+ topic.geneList
+        });
+        const wigFile = result.data.topic.map(topic =>{
+          return "http://localhost:8080/"+ topic.wigFile
+      });
           this.setState({
             topicName: topicID[0],
             proteinList: proteinList[0],
-            loading: false
+            genelist: genelist,
+            loading: false,
+            wigFile: wigFile
           });
         }).catch(error =>{
             console.log(error);
@@ -105,7 +130,8 @@ class TopicPage extends React.Component {
 
       render(){  
         const {classes} = this.props;
-        const{topicName,proteinList,loading,message,expanded} = this.state;
+        const{topicName,proteinList,loading,message,expanded,genelist,wigFile} = this.state;
+                  
     return (
             <div>
             <div className={classes.jumbotron}>
@@ -128,12 +154,22 @@ class TopicPage extends React.Component {
 
                     </CardContent>
                     <Divider variant="middle"/>
+                    
+
                     <CardActions>
+                    <Tooltip title="Download">
+                                        <Button size="small" color="primary" onClick={this.handlewigDownloadClick}>
+                                        <DownloadIcon className={classes.leftIcon} />
+                                            Wig File
+                                        </Button>
+                    </Tooltip>
+                    <Tooltip title="Download">
+                                        <Button size="small" color="primary" onClick={this.handlegeneDownloadClick}>
+                                        <DownloadIcon className={classes.leftIcon} />
+                                            Gene List
+                                        </Button>
+                    </Tooltip>
 
-                    {/*<Button size="small">
-                    Learn More
-
-                    </Button>*/}
                     <Button
                         size = "small"
                         className={clsx(classes.expand, {[classes.expandOpen]: expanded,})}
@@ -144,15 +180,15 @@ class TopicPage extends React.Component {
                       Learn more
                         
                     </Button>
-                    </CardActions>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-                  <CardContent>
-                  <TopicStatisticsTable />
-                  {/*<Grid item style={{margin: '0 auto', padding:20}}>                    
-                        <TopicStatisticsTable />
-                    </Grid>*/}  
-                  </CardContent>
-                </Collapse>
+                  </CardActions>
+                      <Collapse in={expanded} timeout="auto" unmountOnExit>
+                          <CardContent>
+                          <TopicStatisticsTable />
+                          {/*<Grid item style={{margin: '0 auto', padding:20}}>                    
+                                <TopicStatisticsTable />
+                            </Grid>*/}  
+                          </CardContent>
+                      </Collapse>
                 </Card>
             </Grid>
                 <br/> 
@@ -160,6 +196,7 @@ class TopicPage extends React.Component {
                         
             </div>
             </div>
+            
        
     );
 }}

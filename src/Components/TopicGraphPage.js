@@ -117,9 +117,11 @@ class TopicGraphPage extends React.Component {
                   {pp}
                   </Grid>
                   <Grid item>
+                  {genes}
+                  </Grid>
+                  <Grid item>
                   {motif}
                   </Grid>
-                    
                 </Paper>
                     
                     

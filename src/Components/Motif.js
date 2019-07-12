@@ -35,7 +35,8 @@ const styles = theme => ({
       },
     card: {
         maxWidth: 1100,
-        minWidth: 1100
+        minWidth: 1100,
+        marginTop:20,
     },    
     largecard: {
       maxWidth: 1200,
@@ -44,8 +45,8 @@ const styles = theme => ({
     featureHeatmap:{
       width: 320,
       height:150,
-      marginTop:20,
-      marginBottom:20,
+      marginTop:5,
+      marginBottom:10,
     //   border: '2px solid yellow'
   },  
   featureHeatmapbar:{
@@ -149,7 +150,6 @@ class Motif extends React.Component {
           }
       }
     }
-    console.log(motifNum)
     var tabList = (motifNum.length)=== 0 ?
     <Tab label={"Motif "}  key={0}/>
     :motifNum.map(item=>(
@@ -160,7 +160,6 @@ class Motif extends React.Component {
     [0,0,0,0,0]
     :[createData(singleMotif.values.split('\t')),];
     //render single motif materials, If no motif then show "no motifs"
-    console.log(rows)
     const motifInfo = (motifNum.length)=== 0 ?
       (<CardContent> 
           <Typography>

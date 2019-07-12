@@ -50,7 +50,7 @@ class Searchtable extends React.Component {
             }
         },
         {
-            name : "Protein Number",
+            name : "Number of Proteins",
             options: {
                 filter: false,
                 sort: true,

@@ -21,7 +21,8 @@ const styles = theme => ({
         // border: '2px solid green'
       },
     card: {
-        minWidth: 1100
+        minWidth: 1100,
+        marginTop:20,
     },           
     
       searchbar:{

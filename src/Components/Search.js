@@ -237,7 +237,7 @@ componentDidMount(){
             components={components}
             value={this.state.single}
             onChange={this.handleChange('single')}
-            placeholder="Search your factor"
+            placeholder="Search your protein"
             isClearable
             autoFocus
           />
