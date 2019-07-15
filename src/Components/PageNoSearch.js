@@ -56,15 +56,15 @@ const PageNoSearch = (props) =>{
                 <div className={classes.jumbotron}>
                     <div className={classes.container}>
                     <Typography variant="h2" gutterBottom>
-                            YEP Topic Project
+                    Topics Yeast Epigenome Project
                         </Typography>
                         
-                        <Typography variant="subtitle1" gutterBottom>
+                        {/*<Typography variant="subtitle1" gutterBottom>
                         <em>Saccharomyces cerevisiae</em> epigenome                        
                         </Typography><Divider/>
                         <Typography variant="caption" component="p" gutterBottom>
                         An improved understanding of how genes are regulated requires an improved understanding of where gene regulatory proteins are bound.
-                        </Typography> 
+                        </Typography>*/}
                                    
                     </div>
                 </div> 
