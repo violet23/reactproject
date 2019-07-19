@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Router, browserHistory } from 'react-router'
 // SubComponents
 import AppContainer from './Components/AppContainer';
 import TopicContainer from './Components/TopicContainer';
@@ -87,7 +86,6 @@ class App extends Component {
   }
 
   render() {
-    const { theme, background } = this.state;
 
     return (
       <MuiThemeProvider theme = {this.state.theme}>
@@ -98,10 +96,11 @@ class App extends Component {
           <Switch>
             <Route exact path='/' 
             render={() => <AppContainer changeTheme={this.handleThemeChange} theme = {this.state.theme} background = {this.state.background}/>} />
+            <Route exact path="/protein/:proteinName" 
+            render={() => <ProteinContainer changeTheme={this.handleThemeChange} theme = {this.state.theme} background = {this.state.background}/>}/>
             <Route exact path="/:topicName"
             render={() => <TopicContainer changeTheme={this.handleThemeChange} theme = {this.state.theme} background = {this.state.background}/>}/>
-            <Route exact path="/protein/:proteinName" render={() => <ProteinContainer changeTheme={this.handleThemeChange} theme = {this.state.theme} background = {this.state.background}/>}/>
-            {/*<Route exact path="/try" component={General} /> */}
+            
           </Switch>   
         </BrowserRouter>
       </div>        

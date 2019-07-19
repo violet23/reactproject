@@ -60,7 +60,7 @@ class TopicContainer extends React.Component {
     };
 
     componentDidMount(){
-      const topicURL = Config.settings.apiURL + Config.settings.topicsEndpoint;
+      //const topicURL = Config.settings.apiURL + Config.settings.topicsEndpoint;
       const getURL = Config.settings.apiURL + Config.settings.proteinsEndpoint;
       axios.get(getURL).then(res=>{
 
@@ -99,7 +99,7 @@ class TopicContainer extends React.Component {
       }
       render(){
           const {classes} = this.props;
-          const{searchOptions, pageData,theme,background} = this.state;
+          const{searchOptions, pageData} = this.state;
           const SearchBar = searchOptions
           ? <Search suggestions = {searchOptions} />
           //showing loading status when not connected to database.

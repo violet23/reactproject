@@ -96,7 +96,7 @@ class ProteinContainer extends React.Component {
       }
       render(){
           const {classes} = this.props;
-          const{searchOptions, pageData,theme,background} = this.state;
+          const{searchOptions, pageData} = this.state;
           const SearchBar = searchOptions
           ? <Search suggestions = {searchOptions} />
           //showing loading status when not connected to database.

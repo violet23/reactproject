@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -46,7 +45,7 @@ class TopicGraphPage extends React.Component {
     }
     
     componentDidMount (){
-        const topic = window.location.pathname;
+      const topic = window.location.pathname;
         const topicURL = Config.settings.apiURL +Config.settings.topicsEndpoint +topic;
         
         axios.get(topicURL).then(result=>{
@@ -67,7 +66,7 @@ class TopicGraphPage extends React.Component {
 
       render(){  
         const {classes} = this.props;
-        const{topic,loading,message,} = this.state;
+        const{loading,message,} = this.state;
         const TopicGraph = loading ? (  
             <Typography component="div" >                   
                 <Typography component="p" variant="subtitle1" >

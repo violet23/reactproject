@@ -8,8 +8,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-
-
 function createData([Motifhit,Protein, P_value, Sequence_1, Sequence_2]) {
     return {Motifhit,Protein, P_value, Sequence_1, Sequence_2};
   }

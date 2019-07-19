@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types, react/jsx-handler-names */
-
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -83,7 +81,7 @@ function Control(props) {
         inputComponent,
         inputProps: {
           className: props.selectProps.classes.input,
-          //inputRef: props.innerRef,
+          inputRef: props.innerRef,
           children: props.children,
           ...props.innerProps,
         },
@@ -154,7 +152,7 @@ const components = {
 class Search extends React.Component {
   state = {
     single: "",
-    suggestions : [],
+    suggestions: []
   };
 
 // life-cycle methods
@@ -184,12 +182,11 @@ componentDidMount(){
               suggestions: suggestions
             });
 
-          });
-
-      
+          });   
       // Setting the title of the browser tab
       document.title = "YEP Topic Project"
 }
+
 
   handleChange = name => value => {
     this.setState({
@@ -201,20 +198,26 @@ componentDidMount(){
         console.log(value);
       }
       else{
-          console.log(this.props)
+          //console.log(this.props)
           //window.location.assign(Config.settings.appURL + '/protein/' + value.label);
-          this.props.history.push('/protein/' + value.label);
-        
+          this.props.history.push('/protein/'+ value.label)
+          //this.props.history.go()
+          
+          
       }
    
   };
 
-
+  handleBlur = () => {
+    this.setState({
+        single: '',
+      });    
+  };
 
   render() {
-    const { classes, theme } = this.props;
-    const {suggestions} = this.state;
-
+    const { classes, theme} = this.props;
+    const {suggestions } = this.state;
+    console.log(suggestions)
     const selectStyles = {
       input: base => ({
         ...base,
@@ -227,8 +230,7 @@ componentDidMount(){
     };
 
     return (
-      <div className={classes.root}>
-        <NoSsr>        
+      <div className={classes.root}>      
         <Paper className={classes.inputContainer} square={true} elevation={1}> 
           <Select
             classes={classes}
@@ -237,12 +239,12 @@ componentDidMount(){
             components={components}
             value={this.state.single}
             onChange={this.handleChange('single')}
+            onBlur={this.handleBlur}
             placeholder="Search your protein"
             isClearable
             autoFocus
           />
            </Paper>
-        </NoSsr>
       </div>
     );
   }

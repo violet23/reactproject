@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -64,7 +63,7 @@ class ProteinGraphPage extends React.Component {
 
       render(){  
         const {classes} = this.props;
-        const{protein,loading,message,} = this.state;
+        const{loading,message,} = this.state;
 
         const pp = loading ? (  
           <Typography component="div" >                   

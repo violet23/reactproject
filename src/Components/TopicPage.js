@@ -96,7 +96,7 @@ class TopicPage extends React.Component {
 
 
     componentDidMount (){
-        const topic = window.location.pathname;
+      const topic = window.location.pathname;
         const topicURL = Config.settings.apiURL +Config.settings.topicsEndpoint +topic;
         
         axios.get(topicURL).then(result=>{
@@ -107,10 +107,10 @@ class TopicPage extends React.Component {
               return topic.proteinList.split("\t").join(', ')
           });
           const genelist = result.data.topic.map(topic =>{
-            return "http://localhost:8080/"+ topic.geneList
+            return Config.settings.apiURL +'/'+ topic.geneList
         });
         const wigFile = result.data.topic.map(topic =>{
-          return "http://localhost:8080/"+ topic.wigFile
+          return Config.settings.apiURL +'/'+ topic.wigFile
       });
           this.setState({
             topicName: topicID[0],
@@ -130,7 +130,7 @@ class TopicPage extends React.Component {
 
       render(){  
         const {classes} = this.props;
-        const{topicName,proteinList,loading,message,expanded,genelist,wigFile} = this.state;
+        const{topicName,proteinList,expanded} = this.state;
                   
     return (
             <div>

@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
-import comingup from '../comingup.png';
+import Config from '../Config.js'
 
 const styles = theme => ({
   jumbotron:{
@@ -19,23 +16,29 @@ const styles = theme => ({
     bottomMargin:'1rem',     
 },
   tagpaper:{
-      width: 150
+      width: 150,
+      overflowX: 'scroll',
+      //marginTop: 10
   },
-    center : {
-        margin: 'auto',      
-        maxWidth: 1100,
-        padding: 5,
-        // border: '2px solid green'
-      },
     card: {
-        maxWidth: 1100,
-        marginTop:20,
-        minWidth: 1100,
+        width: 1100,
+        marginTop:30,
         
     },    
+    pcard: {
+      //maxWidth: 1100,
+      width: 1100,
+      overflow: 'scroll'
+  },   
+  scrolltagcard:{
+    minWidth: 10000,
+    //minWidth: 1000,
+    overflowX : "auto",
+    maxHeight: 25,
+    //minHeight: 25
+},  
     largecard: {
-      maxWidth: 1200,
-      minWidth: 1200
+      width: 1200,
   },      
     featureHeatmap:{
       width: 150,
@@ -44,6 +47,13 @@ const styles = theme => ({
       marginBottom:20,
     //   border: '2px solid yellow'
   },  
+  scroll1card:{
+    //maxWidth: 10000,
+    minWidth: 10000,
+    overflowY : "hidden",
+    overflowX: "auto",
+    maxHeight: 230,
+  },
   featureHeatmapbar:{
       width: 10,
       height:180,
@@ -58,17 +68,15 @@ const styles = theme => ({
         width: 1100
       },
     scroller:{
-      overflow: 'scroll'
+      overflowX: 'scroll'
     },
-      mainContainer:{
-          overflow: 'scroll'
-      },
       colorBar:{
         height: 470,
         width: 20,
         marginTop:14,
         marginLeft: -15   
       },
+
 });
 
 
@@ -78,14 +86,6 @@ class Profiles extends React.Component {
     imageURL:this.props.topic.bindingRegionProfiles[0]
   }
 
-  /*componentDidMount(){
-    this.setState({
-      selectTab :0,
-      bindingRegionProfiles: this.props.topic.bindingRegionProfiles[0],
-      tssProfiles: this.props.topic.tssProfiles[0],
-      tesProfiles : this.props.topic.tesProfiles[0],
-        //stringPicture: this.props.topic.stringPicture
-});}*/
 
   componentWillReceiveProps(nextProps){
     this.setState({
@@ -95,17 +95,6 @@ class Profiles extends React.Component {
   });
   }
 
-  /*handleChange = (event, selectedTab) => {
-    
-    selectedTab === 0 ? this.setState({
-        selectedTab: selectedTab,
-        imageURL: this.props.topic.bindingRegionProfiles[0]
-    }) : 
-    this.setState({
-        selectedTab: selectedTab,
-        imageURL: this.props.topic.tssProfiles[0]
-    })
-  };*/
   handleChange = (event, selectedTab) => {
     
     switch(selectedTab) {
@@ -137,11 +126,12 @@ class Profiles extends React.Component {
     const {imageURL} = this.state;
     const topicID = this.props.topic.topicID;
     const proteinList = this.props.topic.proteinList.split('\t');
+    console.log(proteinList)
     let averagePics = proteinList.map(protein =>(
-      "http://localhost:8080/" + imageURL.averagePlot[0][protein]
+      Config.settings.apiURL +'/'+ imageURL.averagePlot[0][protein]
     ));
-    let heatmapPics= proteinList.map((protein)=>("http://localhost:8080/" + imageURL.heatmap[0][protein]));
-    let heatmap3 = proteinList.map((protein)=>("http://localhost:8080/" + imageURL.heatmap3category[0][protein]));
+    let heatmapPics= proteinList.map((protein)=>(Config.settings.apiURL +'/' + imageURL.heatmap[0][protein]));
+    let heatmap3 = proteinList.map((protein)=>(Config.settings.apiURL +'/' + imageURL.heatmap3category[0][protein]));
     
     const heatmap3category = this.state.selectTab === 0
         ?(<CardContent > 
@@ -149,26 +139,14 @@ class Profiles extends React.Component {
             No heatmap3category pics
           </Typography>
           </CardContent>)
-        :(<Grid container direction="row"
-              justify="flex-start"
-              alignItems="flex-start"
-              spacing={0}
-              className={classes.mainContainer}
-              classes={{scrollable:classes.scroller}} 
-            >                       
-
-            <Grid item >
-              <img src={"http://localhost:8080/" + imageURL.heatmap3categoryBar} alt="heatmap3"
-              className={classes.featureHeatmapbar}/>
-            </Grid>
-
-            <Grid item >
-              <img src={"http://localhost:8080/" + imageURL.heatmap3category[0][topicID]} alt="heatmap3"
-              className={classes.featureHeatmap}/>
-            </Grid>
+        :(                   
             
 
-            <Grid item >
+            <Grid direction="row">
+            <img src={Config.settings.apiURL +'/' + imageURL.heatmap3categoryBar} alt="heatmap3"
+              className={classes.featureHeatmapbar}/>
+              <img src={Config.settings.apiURL +'/'+ imageURL.heatmap3category[0][topicID]} alt="heatmap3"
+              className={classes.featureHeatmap}/>
               {heatmap3.map(item =>(
                 <img
               src = {item}
@@ -176,18 +154,19 @@ class Profiles extends React.Component {
               className={classes.featureHeatmap}
               />
               ))}
+
             </Grid>
 
-          </Grid>)  
+      )  
      
-    return (
+        return (
             <div className={classes.largecard}>
                 <Grid container justify = "center">
                   <Paper elevation={0} className={classes.card} >
                         <Typography variant="h5" paragraph={true}>
                                 Profiles
                             </Typography>
-                            
+                    </Paper>
                     <Paper elevation={4}>  
                         <Tabs
                           value={this.state.selectTab}
@@ -203,9 +182,9 @@ class Profiles extends React.Component {
                         </Tabs>
                         <Divider/>
 
-                    <CardContent className = {classes.card} classes={{scrollable:classes.scroller}} >   
-                      <Typography component="div" >                       
-                              <Grid container direction="row" >
+                    <CardContent className={classes.pcard}>        
+                    <Paper className={classes.scrolltagcard} elevation = {0}>           
+                      <Grid container direction="row" >
                                 <Paper className={classes.tagpaper} elevation = {0}>
                                       <Typography align = 'center'>
                                                Topic-{topicID}
@@ -218,26 +197,24 @@ class Profiles extends React.Component {
                                                {item}
                                       </Typography>
                                     </Paper>
-                                    ))} 
+                                    ))}
                               </Grid>
+                              </Paper>
 
-                              
 
+                              <Paper className={classes.scroll1card} elevation = {0}>    
                               <Grid container 
                                     direction="row"
                                     justify="flex-start"
                                     alignItems="flex-start"
                                     spacing={0}
-                                    className={classes.mainContainer}
-                                    classes={{scrollable:classes.scroller}} 
+                                    className={classes.scroller}
+                                    //classes={{scrollable:classes.scroller}} 
                                   >     
                                                    
                                   <Grid item >
-                                    <img src={"http://localhost:8080/" + imageURL.averagePlot[0][topicID]} alt="average"
+                                  <img src={"http://localhost:8080/" + imageURL.averagePlot[0][topicID]} alt="average"
                                     className={classes.featureHeatmap}/>
-                                  </Grid>
-                                  
-                                  <Grid item >
                                     {averagePics.map(item =>(
                                       <img
                                         src = {item}
@@ -246,26 +223,25 @@ class Profiles extends React.Component {
                                       />
                                           
                                     ))}
-                                    
                                   </Grid>
-                              </Grid>   
-
-                              <Divider/>
-
+                                  
+                                  
+                              </Grid>  
+                              <Divider/> 
+                              </Paper>
+                              
+                              <Paper className={classes.scroll1card} elevation = {0}>   
                               <Grid container 
                                     direction="row"
                                     justify="flex-start"
                                     alignItems="flex-start"
                                     spacing={0}
-                                    className={classes.mainContainer}
-                                    classes={{scrollable:classes.scroller}} 
+                                    //className={classes.mainContainer}
+                                    //classes={{scrollable:classes.scroller}} 
                                   >                       
                                   <Grid item >
-                                    <img src={"http://localhost:8080/" + imageURL.heatmap[0][topicID]} alt="heatmap"
+                                  <img src={"http://localhost:8080/" + imageURL.heatmap[0][topicID]} alt="heatmap"
                                     className={classes.featureHeatmap}/>
-                                  </Grid>
-                                  
-                                  <Grid item >
                                     {heatmapPics.map(item =>(
                                       <img
                                     src = {item}
@@ -274,16 +250,17 @@ class Profiles extends React.Component {
                                     />
                                     ))}
                                   </Grid>
+                                  
 
                               </Grid>
-
                               <Divider/>
-
+                            </Paper>
+                              
+                              <Paper className={classes.scroll1card} elevation = {0}>   
                               {heatmap3category}
-
-                        </Typography>          
+                              </Paper>
+                             
                       </CardContent>
-                      </Paper> 
                       </Paper> 
                     
                         

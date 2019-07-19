@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TopicSubsectorTable from './TopicSubsectorTable';
 import NeighborTopicTable from './NeighborTopicTable';
-import comingup from '../comingup.png';
+import Config from '../Config.js'
 
 const styles = theme => ({
   jumbotron:{
@@ -33,7 +33,7 @@ const styles = theme => ({
       },
     card: {
         maxWidth: 1100,
-        marginTop:20,
+        marginTop:30,
         minWidth: 1100
     },    
     largecard: {
@@ -60,9 +60,7 @@ const styles = theme => ({
       searchbar:{
         width: 1100
       },
-    scroller:{
-      overflow: "hidden"
-    },
+
       mainContainer:{
           overflow: 'scroll'
       },
@@ -118,8 +116,8 @@ class Gene extends React.Component {
     const {classes} = this.props;
     //const{tabContent} = this.state;
     const {topic} = this.state;
-    const topicID = this.props.topic.topicID;
-    const proteinList = this.props.topic.proteinList.split('\t');
+    //const topicID = this.props.topic.topicID;
+    //const proteinList = this.props.topic.proteinList.split('\t');
     console.log()
     /*let averagePics = proteinList.map(protein =>(
       "http://localhost:8080/" + imageURL.averagePlot[0][protein]
@@ -136,7 +134,7 @@ class Gene extends React.Component {
                             
                     <Paper elevation={4}>  
 
-                    <CardContent className = {classes.card}>   
+                    <CardContent>   
                       <Typography component="div" >                       
                                 <Paper className={classes.tagpaper} elevation = {0}>
                                       <Typography variant = "h6">
@@ -149,7 +147,7 @@ class Gene extends React.Component {
                                     justify="flex-start"
                                     //alignItems="center"
                                     spacing={0}
-                                    className={classes.mainContainer}
+                                    //className={classes.mainContainer}
                                   >     
                                                    
                                   <Grid item >
@@ -179,11 +177,11 @@ class Gene extends React.Component {
                                     justify="flex-start"
                                     alignItems="flex-start"
                                     spacing={4}
-                                    className={classes.mainContainer}
+                                    //className={classes.mainContainer}
                                   >     
                                                    
                                   <Grid item >
-                                    <img src={"http://localhost:8080/" + topic.topicSubsectorSignificance} alt="subsector"
+                                    <img src={Config.settings.apiURL +'/' + topic.topicSubsectorSignificance} alt="subsector"
                                     className={classes.featureHeatmap}/>
                                   </Grid>
                                   {/*<Grid item >
@@ -205,11 +203,11 @@ class Gene extends React.Component {
                                     justify="flex-start"
                                     alignItems="flex-start"
                                     spacing={4}
-                                    className={classes.mainContainer}
+                                    //className={classes.mainContainer}
                                   >     
                                                    
                                   <Grid item >
-                                    <img src={"http://localhost:8080/" + topic.topicSubsectorSignificanceSubsectorSpecific} alt="subsector"
+                                    <img src={Config.settings.apiURL +'/' + topic.topicSubsectorSignificanceSubsectorSpecific} alt="subsector"
                                     className={classes.featureHeatmap}/>
                                   </Grid>
                                   {/*<Grid item >
@@ -237,11 +235,11 @@ class Gene extends React.Component {
                                     justify="flex-start"
                                     alignItems="flex-start"
                                     spacing={4}
-                                    className={classes.mainContainer}
+                                    //className={classes.mainContainer}
                                   >     
                                                    
                                   <Grid item >
-                                    <img src={"http://localhost:8080/" + topic.neighborTopicsPlot[0].figure} alt="neighborTopicsPlot"
+                                    <img src={Config.settings.apiURL +'/'+ topic.neighborTopicsPlot[0].figure} alt="neighborTopicsPlot"
                                     className={classes.bigfeatureHeatmap}/>
                                   </Grid>
                                   {/*<Grid item >

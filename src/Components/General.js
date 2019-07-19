@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import comingup from '../comingup.png';
+import Config from '../Config.js'
 
 const styles = theme => ({
   jumbotron:{
@@ -30,18 +29,17 @@ const styles = theme => ({
       },
       forbottom:{
           width: 270,     
-          height:180,
+          height:170,
         //   border: '2px solid yellow'
       },
       fortop:{
         width: 280,     
-        height:300,
+        height:290,
       //   border: '2px solid yellow'
     },
-      mainContainer:{
-          overflow: 'scroll'
-      },
-    
+    tagpaper:{
+      width: 300
+  },
 });
 
 
@@ -70,8 +68,8 @@ class General extends React.Component {
 
       render(){  
         const {classes} = this.props;
-        const topicTagCountsInSubsectors = "http://localhost:8080/"+this.state.topicTagCountsInSubsectors.split('./')[1];
-        const subsectorPicture = "http://localhost:8080/"+this.state.subsectorPicture.split('./')[1];
+        const topicTagCountsInSubsectors = Config.settings.apiURL +'/'+this.state.topicTagCountsInSubsectors.split('./')[1];
+        const subsectorPicture = Config.settings.apiURL +'/'+this.state.subsectorPicture.split('./')[1];
         //const{topicTagCountsInSubsectors} = this.state;
     return (
             <div>
@@ -82,8 +80,8 @@ class General extends React.Component {
                             General
                         </Typography>
                 <Paper elevation={4}>  
-                <CardContent className={classes.sectionHolder}>   
-                              {/* Bottom Section */}                             
+                <CardContent >   
+                                                     
                           <Grid container 
                                     direction="row"
                                     justify="space-evenly"
@@ -93,18 +91,33 @@ class General extends React.Component {
                               <Grid item >
                                   <img src={topicTagCountsInSubsectors} alt="Topic Tag Counts In Subsectors"
                                   className = {classes.fortop}/>
+                                  <Paper className={classes.tagpaper} elevation = {0}>
+                                      <Typography align = 'center'>
+                                      Topic tag counts in subsectors
+                                      </Typography>
+                                  </Paper> 
                               </Grid>
                               <Grid item >
-                                  <img src={subsectorPicture} alt="Subsector Picture"
+                                  <img src={subsectorPicture} alt="Subsector"
                                   className={classes.forbottom}/>
+                                  <Paper className={classes.tagpaper} elevation = {0}>
+                                      <Typography align = 'center'>
+                                      Enriched subsector
+                                      </Typography>
+                                  </Paper> 
                               </Grid>
                               <Grid item>
                                 <img src={comingup} alt="comingup" className = {classes.forbottom}/>
+                                <Paper className={classes.tagpaper} elevation = {0}>
+                                      <Typography align = 'center'>
+                                      Protein-protein interaction network from STRING
+                                      </Typography>
+                                  </Paper> 
                               </Grid>
 
-                            </Grid>             
+                            </Grid>
+                                          
                   </CardContent>
-
                   </Paper> 
                     
                 </Paper>

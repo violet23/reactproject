@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
@@ -16,8 +14,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import comingup from '../comingup.png';
 import MotifHitTable from './MotifHitTable';
+import Config from '../Config.js'
 
 const styles = theme => ({
   jumbotron:{
@@ -91,13 +89,13 @@ function createData([Motif,Width, Sites, LLR, E_value]) {
 class Motif extends React.Component { 
   state = {
     selectTab :0,
-    singleMotif:this.props.topic.motif[0][1]
+    singleMotif:this.props.topic.motif[0][Object.keys(this.props.topic.motif[0])[0]]
   }
 
   componentWillReceiveProps(nextProps){
     this.setState({
       selectTab :0,
-      singleMotif: nextProps.topic.motif[0][1]
+      singleMotif: nextProps.topic.motif[0][Object.keys(this.props.topic.motif[0])[0]]
         //stringPicture: nextProps.topic.stringPicture
   });
   }
@@ -114,8 +112,8 @@ class Motif extends React.Component {
     })
   };*/
   handleChange = (event, selectedTab) => {
-    
-    switch(selectedTab) {
+
+    /*switch(selectedTab) {
         case 1:
             this.setState({
               selectTab: selectedTab,
@@ -133,14 +131,24 @@ class Motif extends React.Component {
               selectTab: selectedTab,
               singleMotif: this.props.topic.motif[0][1]
             })
-      }
+      }*/
+      selectedTab === 0 ? this.setState({
+        selectTab: selectedTab,
+        singleMotif: this.props.topic.motif[0][Object.keys(this.props.topic.motif[0])[0]]
+    }) : 
+    this.setState({
+      selectTab: selectedTab,
+      singleMotif: this.props.topic.motif[0][Object.keys(this.props.topic.motif[0])[selectedTab]]
+    })
+    
   };
 
   render(){ 
     const {classes} = this.props;
-    const {singleMotif} = this.state
+    const {singleMotif} = this.state;
+    //console.log(singleMotif.logo)
+    //console.log(this.props.topic.motif[0][Object.keys(this.props.topic.motif[0])[1]])
     //let heatmap3 = proteinList.map((protein)=>("http://localhost:8080/" + imageURL.heatmap3category[0][protein]));
-
     //Get number of motifs and tag them
     var motifNum = [];
     if(this.props.topic.motif !== []){
@@ -155,7 +163,6 @@ class Motif extends React.Component {
     :motifNum.map(item=>(
     <Tab label={"Motif "+item}  key={item-1}/>
     ))
-
     const rows = (motifNum.length)=== 0 ?
     [0,0,0,0,0]
     :[createData(singleMotif.values.split('\t')),];
@@ -172,10 +179,10 @@ class Motif extends React.Component {
             //justify="space-evenly"
             alignItems="center"
             spacing={0}
-            className={classes.mainContainer}
+            //className={classes.mainContainer}
             >
                 <Grid item >
-                  <img src={"http://localhost:8080/"+singleMotif.logo} alt="Motif logo"
+                <img src={Config.settings.apiURL +'/'+singleMotif.logo} alt="Motif logo"
                   className={classes.featureHeatmap}/>
                 </Grid>
                 <Divider/>
@@ -184,7 +191,7 @@ class Motif extends React.Component {
                     justify="center"
                     alignItems="flex-start"
                     spacing={2}
-                    className={classes.mainContainer}
+                    //className={classes.mainContainer}
                     >
                 <Grid item>
                 <Paper className={classes.root} elevation={3}>
@@ -217,7 +224,7 @@ class Motif extends React.Component {
                   <Divider/>
                   <Grid item>
                       <Paper className={classes.root} elevation={3}>
-                        {<MotifHitTable singleMotif = {singleMotif}/>}
+                      {<MotifHitTable singleMotif = {singleMotif}/>}
                       </Paper>
                   </Grid>
                     
@@ -248,12 +255,12 @@ class Motif extends React.Component {
                         </Tabs>
                         <Divider/>
 
-                    <CardContent className = {classes.card}>   
+                    <CardContent>   
                       <Typography component="div" >      
                               {/*tags if contained*/}                 
                               <Grid container direction="row" ></Grid>
                               
-                                  {motifInfo}
+                              {motifInfo}
                             
                         </Typography>          
                       </CardContent>

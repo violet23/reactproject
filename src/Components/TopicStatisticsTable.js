@@ -20,7 +20,7 @@ class TopicStatisticsTable extends React.Component {
         
     }
     componentDidMount(){
-        const topic = window.location.pathname;
+        const topic =(window.location.pathname);
         var dataURL = Config.settings.apiURL+Config.settings.topicsEndpoint+topic;
         axios.get(dataURL)
         .then(res =>{
@@ -65,7 +65,7 @@ class TopicStatisticsTable extends React.Component {
         rowsPerPageOptions:[50,10,15,20,50,100],
         onRowClick: this.handleRowClick,
         print:false,
-        downloadOptions:{filename: "Topic"+window.location.pathname+'_ProteinTable.csv', separator: ','} 
+        downloadOptions:{filename: "Topic"+(window.location.pathname)+'_ProteinTable.csv', separator: ','} 
       };
 
       const columns = ["proteins", 

@@ -1,14 +1,10 @@
 import React from 'react';
 import { withRouter} from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import CardContent from '@material-ui/core/CardContent';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
-
 
 function createData([Topics,Significance_log10P, Common_genes_num,Common_genes_percent_wrt_topics, wrt_reference_topics]) {
     return {Topics,Significance_log10P, Common_genes_num,Common_genes_percent_wrt_topics, wrt_reference_topics};

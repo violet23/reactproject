@@ -91,7 +91,7 @@ class ProteinPage extends React.Component {
     
 
     componentDidMount (){
-        const protein = (window.location.pathname).split("/")[2];
+      const protein = (window.location.pathname).split("/")[2];
         
         const proteinURL = Config.settings.apiURL +Config.settings.proteinsEndpoint +"/" + protein;
         console.log(proteinURL);
@@ -127,7 +127,7 @@ class ProteinPage extends React.Component {
 
       render(){  
         const {classes} = this.props;
-        const{proteinName,topicList,description,loading,message,expanded} = this.state;
+        const{proteinName,topicList,description,expanded} = this.state;
     return (
             <div>
             <div className={classes.jumbotron}>

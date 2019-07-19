@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
-import comingup from '../comingup.png';
+import Config from '../Config.js'
 
 const styles = theme => ({
   jumbotron:{
@@ -19,14 +16,9 @@ const styles = theme => ({
     bottomMargin:'1rem',     
 },
   tagpaper:{
-      width: 150
+      width: 150,
+      overflowX: 'scroll',
   },
-    center : {
-        margin: 'auto',      
-        maxWidth: 1100,
-        padding: 5,
-        // border: '2px solid green'
-      },
     card: {
         maxWidth: 1100,
         minWidth: 1100
@@ -56,17 +48,33 @@ const styles = theme => ({
         width: 1100
       },
     scroller:{
-      overflow: "hidden"
+      overflow: "scroll"
     },
-      mainContainer:{
-          overflow: 'scroll'
-      },
       colorBar:{
         height: 470,
         width: 20,
         marginTop:14,
         marginLeft: -15   
       },
+      scroll1card:{
+        //maxWidth: 10000,
+        minWidth: 10000,
+        overflowY : "hidden",
+        overflowX: "auto",
+        maxHeight: 230,
+      },
+      scrolltagcard:{
+        minWidth: 10000,
+        //minWidth: 1000,
+        overflowX : "auto",
+        maxHeight: 25,
+        //minHeight: 25
+    },  
+    pcard: {
+      //maxWidth: 1100,
+      width: 1100,
+      overflow: 'scroll'
+  },   
 });
 
 
@@ -76,15 +84,6 @@ class ProteinProfiles extends React.Component {
     imageURL:this.props.protein.bindingRegionProfiles[0]
   }
 
-  /*componentDidMount(){
-    this.setState({
-      selectTab :0,
-      bindingRegionProfiles: this.props.topic.bindingRegionProfiles[0],
-      tssProfiles: this.props.topic.tssProfiles[0],
-      tesProfiles : this.props.topic.tesProfiles[0],
-        //stringPicture: this.props.topic.stringPicture
-});}*/
-
   componentWillReceiveProps(nextProps){
     this.setState({
       selectTab :0,
@@ -93,17 +92,6 @@ class ProteinProfiles extends React.Component {
   });
   }
 
-  /*handleChange = (event, selectedTab) => {
-    
-    selectedTab === 0 ? this.setState({
-        selectedTab: selectedTab,
-        imageURL: this.props.topic.bindingRegionProfiles[0]
-    }) : 
-    this.setState({
-        selectedTab: selectedTab,
-        imageURL: this.props.topic.tssProfiles[0]
-    })
-  };*/
   handleChange = (event, selectedTab) => {
     
     switch(selectedTab) {
@@ -137,10 +125,10 @@ class ProteinProfiles extends React.Component {
     const proteinName = this.props.protein.proteinName;
     const topicList = this.props.protein.topicList.split('\t');
     let averagePics = topicList.map(topic =>(
-      "http://localhost:8080/" + imageURL.averagePlot[0][topic]
+      Config.settings.apiURL +'/' + imageURL.averagePlot[0][topic]
     ));
-    let heatmapPics= topicList.map((topic)=>("http://localhost:8080/" + imageURL.heatmap[0][topic]));
-    let heatmap3 = topicList.map((topic)=>("http://localhost:8080/" + imageURL.heatmap3category[0][topic]));
+    let heatmapPics= topicList.map((topic)=>(Config.settings.apiURL +'/' + imageURL.heatmap[0][topic]));
+    let heatmap3 = topicList.map((topic)=>(Config.settings.apiURL +'/' + imageURL.heatmap3category[0][topic]));
     console.log(imageURL.averagePlot[0])
     console.log(averagePics);
     
@@ -154,16 +142,16 @@ class ProteinProfiles extends React.Component {
               justify="flex-start"
               alignItems="flex-start"
               spacing={0}
-              className={classes.mainContainer}
+              //className={classes.mainContainer}
             >                       
 
             <Grid item >
-              <img src={"http://localhost:8080/" + imageURL.heatmap3categoryBar} alt="heatmap3"
+              <img src={Config.settings.apiURL +'/'+ imageURL.heatmap3categoryBar} alt="heatmap3"
               className={classes.featureHeatmapbar}/>
             </Grid>
 
             <Grid item >
-              <img src={"http://localhost:8080/" + imageURL.heatmap3category[0][proteinName]} alt="heatmap3"
+              <img src={Config.settings.apiURL +'/' + imageURL.heatmap3category[0][proteinName]} alt="heatmap3"
               className={classes.featureHeatmap}/>
             </Grid>
             
@@ -188,7 +176,7 @@ class ProteinProfiles extends React.Component {
                         <Typography variant="h5" paragraph={true}>
                                 Profiles
                             </Typography>
-                            
+                  </Paper>      
                     <Paper elevation={4}>  
                         <Tabs
                           value={this.state.selectTab}
@@ -204,8 +192,8 @@ class ProteinProfiles extends React.Component {
                         </Tabs>
                         <Divider/>
 
-                    <CardContent className = {classes.card}>   
-                      <Typography component="div" >                       
+                    <CardContent className = {classes.pcard}>   
+                    <Paper className={classes.scrolltagcard} elevation = {0}>                      
                               <Grid container direction="row" >
                                 <Paper className={classes.tagpaper} elevation = {0}>
                                       <Typography align = 'center'>
@@ -221,24 +209,21 @@ class ProteinProfiles extends React.Component {
                                     </Paper>
                                     ))} 
                               </Grid>
+                              </Paper>
 
                               
-
+                              <Paper className={classes.scroll1card} elevation = {0}>   
                               <Grid container 
                                     direction="row"
                                     justify="flex-start"
                                     alignItems="flex-start"
                                     spacing={0}
-                                    className={classes.mainContainer}
+                                    className={classes.scroller}
                                   >     
                                                    
                                   <Grid item >
-                                    <img src={"http://localhost:8080/" + imageURL.averagePlot[0][proteinName]} alt="average"
+                                    <img src={Config.settings.apiURL +'/' + imageURL.averagePlot[0][proteinName]} alt="average"
                                     className={classes.featureHeatmap}/>
-                                  </Grid>
-                                
-                                 
-                                  <Grid item >
                                     {averagePics.map(item =>(
                                       <img
                                         src = {item}
@@ -252,20 +237,19 @@ class ProteinProfiles extends React.Component {
                               </Grid>   
 
                               <Divider/>
+                              </Paper>
 
+                              <Paper className={classes.scroll1card} elevation = {0}>   
                               <Grid container 
                                     direction="row"
                                     justify="flex-start"
                                     alignItems="flex-start"
                                     spacing={0}
-                                    className={classes.mainContainer}
+                                    //className={classes.mainContainer}
                                   >                       
                                   <Grid item >
-                                    <img src={"http://localhost:8080/" + imageURL.heatmap[0][proteinName]} alt="heatmap"
+                                    <img src={Config.settings.apiURL +'/'+ imageURL.heatmap[0][proteinName]} alt="heatmap"
                                     className={classes.featureHeatmap}/>
-                                  </Grid>
-                                  
-                                  <Grid item >
                                     {heatmapPics.map(item =>(
                                       <img
                                     src = {item}
@@ -278,19 +262,21 @@ class ProteinProfiles extends React.Component {
                               </Grid>
 
                               <Divider/>
+                              </Paper>
 
-                              {heatmap3category}
-
-                        </Typography>          
+                              <Paper className={classes.scroll1card} elevation = {0}> 
+                                  {heatmap3category}
+                              </Paper>
+      
                       </CardContent>
                       </Paper> 
-                      </Paper> 
+                      
                     
                         
                     
-                </Grid>
-            </div>    
+                </Grid>  
             </div>  
+            </div>
           
        
     );

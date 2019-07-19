@@ -13,9 +13,7 @@ import FormatColorIcon from '@material-ui/icons/FormatColorFill';
 //sub components
 import Search from './Search';
 import PageNoSearch from './PageNoSearch';
-// import image assets
-import pennstatelogo from '../pennstatelogo.png';
-import cegrlogo from '../CEGRlogo.png';
+
 //configuration
 import Config from '../Config';
 
@@ -116,7 +114,7 @@ class AppContainer extends React.Component {
       }
       render(){
           const {classes} = this.props;
-          const{searchOptions, pageData, theme,background} = this.state;
+          const{searchOptions, pageData} = this.state;
           console.log(this.state.background)
           const SearchBar = searchOptions
           ? <Search suggestions = {searchOptions} />
