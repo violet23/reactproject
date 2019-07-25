@@ -12,17 +12,17 @@ import Config from '../Config.js'
 
 const styles = theme => ({
   jumbotron:{
-    padding: '1rem 1rem',
-    bottomMargin:'1rem',     
+    padding: '3rem 3rem',
+    //bottomMargin:'1rem',     
 },
   tagpaper:{
-      width: 150,
+      width: 170,
       overflowX: 'scroll',
-      //marginTop: 10
+      marginTop: 10
   },
     card: {
         width: 1100,
-        marginTop:30,
+        //marginTop:10,
         
     },    
     pcard: {
@@ -31,7 +31,7 @@ const styles = theme => ({
       overflow: 'scroll'
   },   
   scrolltagcard:{
-    minWidth: 10000,
+    //minWidth: 10000,
     //minWidth: 1000,
     overflowX : "auto",
     maxHeight: 25,
@@ -45,20 +45,39 @@ const styles = theme => ({
       height:180,
       marginTop:20,
       marginBottom:20,
+      marginLeft: 10,
     //   border: '2px solid yellow'
   },  
+  featurelargeHeatmap:{
+    width: 150,
+    height:300,
+    marginTop:20,
+    marginBottom:20,
+    marginLeft: 20,
+
+  //   border: '2px solid yellow'
+},  
+featurelarge0Heatmap:{
+  width: 150,
+  height:300,
+  marginTop:20,
+  marginBottom:20,
+  marginRight: 3
+//   border: '2px solid yellow'
+},  
   scroll1card:{
     //maxWidth: 10000,
-    minWidth: 10000,
-    overflowY : "hidden",
+    //minWidth: 10000,
+    //overflowY : "hidden",
     overflowX: "auto",
     maxHeight: 230,
   },
   featureHeatmapbar:{
       width: 10,
-      height:180,
+      height:300,
       marginTop:20,
       marginBottom:20,
+      marginLeft: 10
 
   },
   myColor:{
@@ -76,6 +95,9 @@ const styles = theme => ({
         marginTop:14,
         marginLeft: -15   
       },
+      mytags:{
+        overflow: 'scroll'
+      }
 
 });
 
@@ -127,11 +149,9 @@ class Profiles extends React.Component {
     const topicID = this.props.topic.topicID;
     const proteinList = this.props.topic.proteinList.split('\t');
     console.log(proteinList)
-    let averagePics = proteinList.map(protein =>(
-      Config.settings.apiURL +'/'+ imageURL.averagePlot[0][protein]
-    ));
-    let heatmapPics= proteinList.map((protein)=>(Config.settings.apiURL +'/' + imageURL.heatmap[0][protein]));
-    let heatmap3 = proteinList.map((protein)=>(Config.settings.apiURL +'/' + imageURL.heatmap3category[0][protein]));
+    //let averagePics = proteinList.map(protein =>(Config.settings.apiURL +'/'+ imageURL.averagePlot[0][protein]));
+    //et heatmapPics= proteinList.map((protein)=>(Config.settings.apiURL +'/' + imageURL.heatmap[0][protein]));
+    //let heatmap3 = proteinList.map((protein)=>(Config.settings.apiURL +'/' + imageURL.heatmap3category[0][protein]));
     
     const heatmap3category = this.state.selectTab === 0
         ?(<CardContent > 
@@ -140,33 +160,39 @@ class Profiles extends React.Component {
           </Typography>
           </CardContent>)
         :(                   
-            
+              <Grid container direction="row" wrap="nowrap">
 
-            <Grid direction="row">
-            <img src={Config.settings.apiURL +'/' + imageURL.heatmap3categoryBar} alt="heatmap3"
-              className={classes.featureHeatmapbar}/>
-              <img src={Config.settings.apiURL +'/'+ imageURL.heatmap3category[0][topicID]} alt="heatmap3"
-              className={classes.featureHeatmap}/>
-              {heatmap3.map(item =>(
-                <img
-              src = {item}
-              alt="heatmap3" 
-              className={classes.featureHeatmap}
-              />
-              ))}
+                                  <Grid item>
+                                  <img src={Config.settings.apiURL +'/' + imageURL.heatmap3categoryBar} alt="heatmap3"
+                                    className={classes.featureHeatmapbar}/>
+                                  </Grid>
+                                  <Grid item>
+                                    <img src={Config.settings.apiURL +'/'+ imageURL.heatmap3category[0][topicID]} alt="heatmap3"
+                                    className={classes.featurelarge0Heatmap}/>
+                                  </Grid>
+
+                                  {proteinList.map(item =>(
+                                      <Grid item>
+                                          <img
+                                              src = {Config.settings.apiURL +'/' + imageURL.heatmap3category[0][item]}
+                                              alt="average" 
+                                              className={classes.featurelargeHeatmap}
+                                            />
+                                      </Grid>
+                                      ))}
 
             </Grid>
 
       )  
      
         return (
-            <div className={classes.largecard}>
-                <Grid container justify = "center">
-                  <Paper elevation={0} className={classes.card} >
-                        <Typography variant="h5" paragraph={true}>
-                                Profiles
-                            </Typography>
-                    </Paper>
+            <div className={classes.jumbotron}>
+               
+                  {/* <Paper elevation={0} className={classes.card} > */}
+                    <Typography variant="h5" paragraph={true} className={classes.card} >
+                         Profiles
+                    </Typography>
+                    {/* </Paper> */}
                     <Paper elevation={4}>  
                         <Tabs
                           value={this.state.selectTab}
@@ -181,91 +207,83 @@ class Profiles extends React.Component {
                           <Tab label="TES Profiles" key={2} />
                         </Tabs>
                         <Divider/>
-
-                    <CardContent className={classes.pcard}>        
-                    <Paper className={classes.scrolltagcard} elevation = {0}>           
-                      <Grid container direction="row" >
-                                <Paper className={classes.tagpaper} elevation = {0}>
-                                      <Typography align = 'center'>
-                                               Topic-{topicID}
-                                      </Typography>
-                                  </Paper> 
-                                 
-                                  {proteinList.map(item =>(
-                                    <Paper className={classes.tagpaper} elevation = {0}>
-                                      <Typography align = 'center'>
-                                               {item}
-                                      </Typography>
-                                    </Paper>
-                                    ))}
-                              </Grid>
-                              </Paper>
-
-
-                              <Paper className={classes.scroll1card} elevation = {0}>    
-                              <Grid container 
-                                    direction="row"
-                                    justify="flex-start"
-                                    alignItems="flex-start"
-                                    spacing={0}
-                                    className={classes.scroller}
-                                    //classes={{scrollable:classes.scroller}} 
-                                  >     
-                                                   
-                                  <Grid item >
-                                  <img src={"http://localhost:8080/" + imageURL.averagePlot[0][topicID]} alt="average"
-                                    className={classes.featureHeatmap}/>
-                                    {averagePics.map(item =>(
-                                      <img
-                                        src = {item}
-                                        alt="average" 
-                                        className={classes.featureHeatmap}
-                                      />
-                                          
-                                    ))}
-                                  </Grid>
-                                  
-                                  
-                              </Grid>  
-                              <Divider/> 
-                              </Paper>
-                              
-                              <Paper className={classes.scroll1card} elevation = {0}>   
-                              <Grid container 
-                                    direction="row"
-                                    justify="flex-start"
-                                    alignItems="flex-start"
-                                    spacing={0}
-                                    //className={classes.mainContainer}
-                                    //classes={{scrollable:classes.scroller}} 
-                                  >                       
-                                  <Grid item >
-                                  <img src={"http://localhost:8080/" + imageURL.heatmap[0][topicID]} alt="heatmap"
-                                    className={classes.featureHeatmap}/>
-                                    {heatmapPics.map(item =>(
-                                      <img
-                                    src = {item}
-                                    alt="heatmap" 
-                                    className={classes.featureHeatmap}
-                                    />
-                                    ))}
-                                  </Grid>
-                                  
-
-                              </Grid>
-                              <Divider/>
-                            </Paper>
-                              
-                              <Paper className={classes.scroll1card} elevation = {0}>   
-                              {heatmap3category}
-                              </Paper>
-                             
-                      </CardContent>
-                      </Paper> 
-                    
                         
-                    
+                <Grid container direction="column" className={classes.mytags}>
+                    {/* <CardContent className={classes.pcard}>  */}
+                      <Grid item>
+                        <Grid container direction="row" wrap="nowrap">        
+                              <Grid item>                  
+                                    <Grid container direction="column">
+                                            <Grid item>
+                                                  <Typography align = 'center' className={classes.tagpaper}>
+                                                  Topic-{topicID}
+                                                  </Typography>
+                                            </Grid>
+                                            <Grid item>
+                                                  <img
+                                                      src = {Config.settings.apiURL +'/'+ imageURL.averagePlot[0][topicID]}
+                                                      alt="average" 
+                                                      className={classes.featureHeatmap}
+                                                    />
+                                            </Grid>
+                                      </Grid>
+                                </Grid>
+
+                              <Grid container direction="row" wrap="nowrap">
+          
+                                  {proteinList.map(item =>(
+                                        <div>
+                                            <Grid item>
+                                                <Typography align = 'center' className={classes.tagpaper}>
+                                                      {item}
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item>
+                                                <img
+                                                    src = {Config.settings.apiURL +'/'+ imageURL.averagePlot[0][item]}
+                                                    alt="average" 
+                                                    className={classes.featureHeatmap}
+                                                  />
+                                            </Grid>
+                                        </div>
+                                          
+                                      ))}
+                              </Grid>
+                          </Grid>  
+                      </Grid>
+
+                      <Grid item>
+
+                              <Grid container direction="row" wrap="nowrap">
+
+                                  <Grid item>
+                                      <img src={Config.settings.apiURL +'/'+  imageURL.heatmap[0][topicID]} alt="heatmap"
+                                        className={classes.featurelargeHeatmap}/>
+                                  </Grid>
+
+                                  {proteinList.map(item =>(
+                                      <Grid item>
+                                          <img
+                                              src = {Config.settings.apiURL +'/' + imageURL.heatmap[0][item]}
+                                              alt="average" 
+                                              className={classes.featurelargeHeatmap}
+                                            />
+                                      </Grid>
+                                      ))}
+                        </Grid>  
+
+                        <Divider/>
+
+                        <Grid item>
+                                {heatmap3category}
+                        </Grid>
+                    </Grid>
+
                 </Grid>
+                    
+                      </Paper> 
+                                         
+                
             </div>      
           
        

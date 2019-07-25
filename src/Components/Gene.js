@@ -14,12 +14,10 @@ import Config from '../Config.js'
 const styles = theme => ({
   jumbotron:{
     padding: '1rem 1rem',
-    bottomMargin:'1rem',     
+    //bottomMargin:'1rem',     
 },
   tagpaper:{
       minWidth: 150,
-      marginTop:20,
-      marginBottom:10,
   },
   smalltagpaper:{
     //maxWidth: 180,
@@ -33,7 +31,7 @@ const styles = theme => ({
       },
     card: {
         maxWidth: 1100,
-        marginTop:30,
+        marginTop:10,
         minWidth: 1100
     },    
     largecard: {
@@ -100,18 +98,6 @@ class Gene extends React.Component {
         //stringPicture: nextProps.topic.stringPicture
   });
   }
-
-  /*handleChange = (event, selectedTab) => {
-    
-    selectedTab === 0 ? this.setState({
-        selectedTab: selectedTab,
-        imageURL: this.props.topic.bindingRegionProfiles[0]
-    }) : 
-    this.setState({
-        selectedTab: selectedTab,
-        imageURL: this.props.topic.tssProfiles[0]
-    })
-  };*/
   render(){ 
     const {classes} = this.props;
     //const{tabContent} = this.state;
