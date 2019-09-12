@@ -28,10 +28,15 @@ const styles = theme => ({
         width: 1100
       },
       forbottom:{
-          width: 270,     
-          height:170,
+          width: 450,     
+          height:160,
         //   border: '2px solid yellow'
       },
+      forstring:{
+        minwidth: 100,     
+        minHeight:180,
+      //   border: '2px solid yellow'
+    },
       fortop:{
         width: 280,     
         height:290,
@@ -48,21 +53,21 @@ class General extends React.Component {
   state ={
     topicTagCountsInSubsectors: this.props.topic.topicTagCountsInSubsectors,
     subsectorPicture: this.props.topic.subsectorPicture,
-    //stringPicture: this.props.topic.stringPicture
+    stringImage: this.props.topic.stringImage
     }
     
     componentDidMount(){
         this.setState({
           topicTagCountsInSubsectors: this.props.topic.topicTagCountsInSubsectors,
           subsectorPicture: this.props.topic.subsectorPicture,
-            //stringPicture: this.props.topic.stringPicture
+          stringImage: this.props.topic.stringImage
     });}
 
     componentWillReceiveProps(nextProps){
         this.setState({
             topicTagCountsInSubsectors: nextProps.topic.topicTagCountsInSubsectors,
             subsectorPicture: nextProps.topic.subsectorPicture,
-            //stringPicture: nextProps.topic.stringPicture
+            stringImage: nextProps.topic.stringImage
     });
       }
 
@@ -70,6 +75,10 @@ class General extends React.Component {
         const {classes} = this.props;
         const topicTagCountsInSubsectors = Config.settings.apiURL +'/'+this.state.topicTagCountsInSubsectors;
         const subsectorPicture = Config.settings.apiURL +'/'+this.state.subsectorPicture;
+        const stringImage = (this.props.topic.stringImage)=== "No STRING image" ?
+        (comingup)
+        : (Config.settings.apiURL +'/'+this.state.stringImage)
+        console.log(this.state.stringImage)
         //console.log(this.state.subsectorPicture)
         //const{topicTagCountsInSubsectors} = this.state;
     return (
@@ -107,10 +116,13 @@ class General extends React.Component {
                                       </Typography>
                                   </Paper> 
                               </Grid>
-                              <Grid item>
-                                <img src={comingup} alt="comingup" className = {classes.forbottom}/>
+                              <Grid item align = "flex-left">
+                              <img src={stringImage} alt="Subsector"
+                                  className={classes.forbottom} />
                                 <Paper className={classes.tagpaper} elevation = {0}>
+                                
                                       <Typography align = 'center'>
+                                      
                                       Protein-protein interaction network from STRING
                                       </Typography>
                                   </Paper> 

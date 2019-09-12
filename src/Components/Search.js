@@ -199,7 +199,7 @@ componentDidMount(){
       }
       else{
           //console.log(this.props)
-          //window.location.assign(Config.settings.appURL + '/protein/' + value.label);
+          window.location.assign(Config.settings.appURL + '/protein/' + value.label);
           this.props.history.push('/protein/'+ value.label)
           //this.props.history.go()
           

@@ -49,6 +49,7 @@ class TopicGraphPage extends React.Component {
       const topic = window.location.pathname;
         const topicURL = Config.settings.apiURL +Config.settings.topicsEndpoint +topic;
         
+        
         axios.get(topicURL).then(result=>{
           let topic = result.data.topic;
           this.setState({
@@ -62,9 +63,10 @@ class TopicGraphPage extends React.Component {
                 loading: true,
                 message: error.message
             })
-        });;    
-      }
+        });;   
 
+      }
+      
       render(){  
         const {classes} = this.props;
         const{loading,message,} = this.state;
