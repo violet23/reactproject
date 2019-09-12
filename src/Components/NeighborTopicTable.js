@@ -42,7 +42,8 @@ class NeighborTopicTable extends React.Component {
 
                 
         //structure the hit table
-        const neighborTopicTable = (<Table size = 'small'>
+        const neighborTopicTable = (
+            <Table size = 'small'>
                         <TableHead>
                             <TableRow>
                             <TableCell>Topic</TableCell>
@@ -52,6 +53,9 @@ class NeighborTopicTable extends React.Component {
                             <TableCell align="center">Average_position</TableCell>
                             </TableRow>
                         </TableHead>
+                        <div>
+
+                        </div>
                         <TableBody>
                             {arr.map(row => (
                             <TableRow key={row.Topic}>
@@ -65,7 +69,10 @@ class NeighborTopicTable extends React.Component {
                             </TableRow>
                             ))}
                         </TableBody>
-                    </Table>)
+                    </Table>
+                    
+                    )
+
         return (
             <div>
                 {neighborTopicTable}

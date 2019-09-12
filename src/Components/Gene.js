@@ -4,11 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-
+import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TopicSubsectorTable from './TopicSubsectorTable';
 import NeighborTopicTable from './NeighborTopicTable';
+import Collapse from '@material-ui/core/Collapse';
 import Config from '../Config.js'
 
 const styles = theme => ({
@@ -18,6 +19,7 @@ const styles = theme => ({
 },
   tagpaper:{
       minWidth: 150,
+      marginTop:10,
   },
   smalltagpaper:{
     //maxWidth: 180,
@@ -46,8 +48,8 @@ const styles = theme => ({
     //   border: '2px solid yellow'
   },  
   bigfeatureHeatmap:{
-    width: 300,
-    height:320,
+    maxWidth: 300,
+    maxHeight:320,
     marginTop:30,
     marginBottom:20,
   //   border: '2px solid yellow'
@@ -55,13 +57,13 @@ const styles = theme => ({
   myColor:{
     background: 'black'
   },
+  imagecard:{
+    minWidth: 510,
+  },
       searchbar:{
         width: 1100
       },
 
-      mainContainer:{
-          overflow: 'scroll'
-      },
       colorBar:{
         height: 470,
         width: 20,
@@ -70,8 +72,10 @@ const styles = theme => ({
       },
       root: {
         width: '100%',
-        marginTop: theme.spacing(3),
+        //marginTop: theme.spacing(3),
         overflowX: 'auto',
+        overflowY: 'auto',
+        maxHeight: 300
       },
 });
 
@@ -79,17 +83,27 @@ const styles = theme => ({
 class Gene extends React.Component { 
   state = {
     selectTab :0,
-    topic:this.props.topic
+    topic:this.props.topic,
+    expanded0: false,
+    expanded1: false,
+    expanded2: false
   }
 
-  /*componentDidMount(){
-    this.setState({
-      selectTab :0,
-      bindingRegionProfiles: this.props.topic.bindingRegionProfiles[0],
-      tssProfiles: this.props.topic.tssProfiles[0],
-      tesProfiles : this.props.topic.tesProfiles[0],
-        //stringPicture: this.props.topic.stringPicture
-});}*/
+handleExpandClick0= () =>{
+  this.setState({
+    expanded0: !this.state.expanded0
+  })
+}
+handleExpandClick1= () =>{
+  this.setState({
+    expanded1: !this.state.expanded1
+  })
+}
+handleExpandClick2= () =>{
+  this.setState({
+    expanded2: !this.state.expanded2
+  })
+}
 
   componentWillReceiveProps(nextProps){
     this.setState({
@@ -101,14 +115,12 @@ class Gene extends React.Component {
   render(){ 
     const {classes} = this.props;
     //const{tabContent} = this.state;
-    const {topic} = this.state;
+    const {topic,expanded0,expanded1,expanded2} = this.state;
     //const topicID = this.props.topic.topicID;
     //const proteinList = this.props.topic.proteinList.split('\t');
-    console.log()
     /*let averagePics = proteinList.map(protein =>(
       "http://localhost:8080/" + imageURL.averagePlot[0][protein]
     ));*/
-    
      
     return (
             <div className={classes.jumbotron}>
@@ -143,105 +155,104 @@ class Gene extends React.Component {
                                       </Typography>
                                   </Paper> 
                                   </Grid>
-                                  {/*<Grid item >
-                                  <Paper className={classes.smalltagpaper} elevation = {0}>
-                                      <Typography variant="subtitle1" align = 'center'>
-                                      # common genes
-                                      </Typography>
-                                  </Paper> 
-                                  </Grid>
-                                  <Grid item >
-                                  <Paper className={classes.smalltagpaper} elevation = {0}>
-                                      <Typography variant="subtitle1" align = 'center'>
-                                      Percent of common genes with respect to other topics
-                                      </Typography>
-                                  </Paper> 
-                                  </Grid>*/}
+                                  
                               </Grid> 
-                              <Grid container 
-                                    direction="row"
-                                    justify="flex-start"
-                                    alignItems="flex-start"
-                                    spacing={4}
-                                    //className={classes.mainContainer}
+                                  
+
+                        <Grid container 
+                              direction="column"
+                              //justify="flex-start"
+                              alignItems="flex-start"
+                              spacing = {0}>
+
+                              <Grid item justify="flex-start"
                                   >     
-                                                   
-                                  <Grid item >
-                                    <img src={Config.settings.apiURL +'/' + topic.topicSubsectorSignificance} alt="subsector"
-                                    className={classes.featureHeatmap}/>
-                                  </Grid>
-                                  {/*<Grid item >
-                                    <img src={"http://localhost:8080/" + topic.topicSubsectorNoCommonGenes} alt="average"
-                                    className={classes.featureHeatmap}/>
-                                  </Grid>
-                                  <Grid item >
-                                    <img src={"http://localhost:8080/" + topic.topicSubsectorPercentCommonGenesForTopics} alt="average"
-                                    className={classes.featureHeatmap}/>
-                                  </Grid>*/}
-                                  <Grid item>
-                                      <Paper className={classes.root} elevation={3}>
-                                        {<TopicSubsectorTable table = {topic.topicSubsectorResults}/>}
-                                      </Paper>
-                                  </Grid>
-                              </Grid>  
-                              <Grid container 
-                                    direction="row"
-                                    justify="flex-start"
-                                    alignItems="flex-start"
-                                    spacing={4}
-                                    //className={classes.mainContainer}
-                                  >     
-                                                   
-                                  <Grid item >
-                                    <img src={Config.settings.apiURL +'/' + topic.topicSubsectorSignificanceSubsectorSpecific} alt="subsector"
-                                    className={classes.featureHeatmap}/>
-                                  </Grid>
-                                  {/*<Grid item >
-                                    <img src={"http://localhost:8080/" + topic.topicSubsectorNoCommonGenesSubsectorSpecific} alt="average"
-                                    className={classes.featureHeatmap}/>
-                                  </Grid>
-                                  <Grid item >
-                                    <img src={"http://localhost:8080/" + topic.topicSubsectorPercentCommonGenesForTopicsSubsectorSpecific} alt="average"
-                                    className={classes.featureHeatmap}/>
-                                  </Grid>*/}
-                                  <Grid item>
-                                      <Paper className={classes.root} elevation={3}>
-                                        {<TopicSubsectorTable table = {topic.topicSubsectorResultsSubsectorSpecific}/>}
-                                      </Paper>
-                                  </Grid>
+                                  <Card elevation={0} className={classes.imagecard}>
+                                        
+                                            <img 
+                                              src={Config.settings.apiURL +'/' + topic.topicSubsectorSignificance} alt="subsector"
+                                    className={classes.featureHeatmap}
+                                              onClick={this.handleExpandClick0}
+                                              aria-expanded={this.state.expanded0}
+                                              aria-label="Show more"
+                                          />
+                          
+                                        
+                                        
+                                          <Collapse in={expanded0} timeout="auto" unmountOnExit>
+                                              <CardContent >
+                                                  <Paper className={classes.root} elevation={3}>
+                                                    {<TopicSubsectorTable table = {topic.topicSubsectorResults}/>}
+                                                  </Paper>
+                                              </CardContent>
+                                          </Collapse>
+                                    </Card>   
+
                               </Grid>
+
+
+
+                              <Grid item justify="flex-start"
+                                  >     
+                                  <Card elevation={0} className={classes.imagecard}>
+                                        
+                                            <img 
+                                              src={Config.settings.apiURL +'/' + topic.topicSubsectorSignificanceSubsectorSpecific} alt="subsector"
+                                    className={classes.featureHeatmap}
+                                              onClick={this.handleExpandClick1}
+                                              aria-expanded={this.state.expanded1}
+                                              aria-label="Show more"
+                                          />
+                                        
+                                        
+                                          <Collapse in={expanded1} timeout="auto" unmountOnExit>
+                                              <CardContent>
+                                              <Paper className={classes.root} elevation={3}>
+                                                {<TopicSubsectorTable table = {topic.topicSubsectorResultsSubsectorSpecific}/>}
+                                              </Paper>
+                                              </CardContent>
+                                          </Collapse>
+                                    </Card>   
+
+                              </Grid>
+
+                              </Grid>
+
                                 <Paper className={classes.tagpaper} elevation = {0}>
                                       <Typography variant = "h6">
                                       Topics around the reference topic bins:
                                       </Typography>
                                 </Paper> 
-                                <Divider/>
-                                <Grid container 
-                                    direction="row"
-                                    justify="flex-start"
-                                    alignItems="flex-start"
-                                    spacing={4}
-                                    //className={classes.mainContainer}
-                                  >     
-                                                   
-                                  <Grid item >
-                                    <img src={Config.settings.apiURL +'/'+ topic.neighborTopicsPlot[0].figure} alt="neighborTopicsPlot"
-                                    className={classes.bigfeatureHeatmap}/>
+                                <Divider/>          
+                                <Grid item justify="flex-start">     
+
+                                  <Card elevation={0}>
+                                        <CardContent >
+                                              <img 
+                                              src={Config.settings.apiURL +'/'+ topic.neighborTopicsPlot[0].figure} alt="neighborTopicsPlot"
+                                          className={classes.bigfeatureHeatmap}
+                                              onClick={this.handleExpandClick2}
+                                              aria-expanded={this.state.expanded2}
+                                              aria-label="Show more"
+                                          />
+                                            
+                                        </CardContent>
+                                        
+                                        
+                                          <Collapse in={expanded2} timeout="auto" unmountOnExit>
+                                              <CardContent>
+                                                  <Paper className={classes.root} elevation={3}>
+                                                      {<NeighborTopicTable table = {topic.neighborTopicsPlot}/>}
+                                                  </Paper>
+                                              </CardContent>
+                                          </Collapse>
+                                    </Card>
+                              
                                   </Grid>
-                                  {/*<Grid item >
-                                    <img src={"http://localhost:8080/" + topic.topicSubsectorNoCommonGenesSubsectorSpecific} alt="average"
-                                    className={classes.featureHeatmap}/>
-                                  </Grid>
-                                  <Grid item >
-                                    <img src={"http://localhost:8080/" + topic.topicSubsectorPercentCommonGenesForTopicsSubsectorSpecific} alt="average"
-                                    className={classes.featureHeatmap}/>
-                                  </Grid>*/}
-                                  <Grid item>
-                                      <Paper className={classes.root} elevation={3}>
-                                        {<NeighborTopicTable table = {topic.neighborTopicsPlot}/>}
-                                      </Paper>
-                                  </Grid>
-                              </Grid>
+
+                                  
+
+                                  
 
 
 
@@ -253,7 +264,8 @@ class Gene extends React.Component {
                         
                     
                 </Grid>
-            </div>      
+            </div>     
+
           
        
     );

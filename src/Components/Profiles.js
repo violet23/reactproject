@@ -25,18 +25,8 @@ const styles = theme => ({
         //marginTop:10,
         
     },    
-    pcard: {
-      //maxWidth: 1100,
-      width: 1100,
-      overflow: 'scroll'
-  },   
-  scrolltagcard:{
-    //minWidth: 10000,
-    //minWidth: 1000,
-    overflowX : "auto",
-    maxHeight: 25,
-    //minHeight: 25
-},  
+    
+
     largecard: {
       width: 1200,
   },      
@@ -65,13 +55,7 @@ featurelarge0Heatmap:{
   marginRight: 3
 //   border: '2px solid yellow'
 },  
-  scroll1card:{
-    //maxWidth: 10000,
-    //minWidth: 10000,
-    //overflowY : "hidden",
-    overflowX: "auto",
-    maxHeight: 230,
-  },
+
   featureHeatmapbar:{
       width: 10,
       height:300,

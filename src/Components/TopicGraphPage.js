@@ -10,7 +10,8 @@ import Config from '../Config';
 import General from './General';
 import Profiles from './Profiles';
 import Gene from './Gene';
-import Motif from './Motif'
+import Motif from './Motif';
+import MuiVirtualizedTable from './virtualizedTable'
 
 const styles = theme => ({
   jumbotron:{
@@ -105,6 +106,7 @@ class TopicGraphPage extends React.Component {
           </Typography> 
           ) : (<Motif topic = {this.state.topic}/>);
 
+
     return (
         <div className={classes.root}>
             <Grid container justify = "center">
@@ -121,6 +123,7 @@ class TopicGraphPage extends React.Component {
                   <Grid item>
                   {motif}
                   </Grid>
+
                 </Paper>
                     
                     

@@ -48,7 +48,7 @@ class MotifHitTable extends React.Component {
             </Typography>
           </CardContent>)
         : ( 
-                    <Table size = 'small'>
+                    <Table size = 'medium'>
                         <TableHead>
                             <TableRow>
                             <TableCell>Motifhit</TableCell>

@@ -68,8 +68,9 @@ class General extends React.Component {
 
       render(){  
         const {classes} = this.props;
-        const topicTagCountsInSubsectors = Config.settings.apiURL +'/'+this.state.topicTagCountsInSubsectors.split('./')[1];
-        const subsectorPicture = Config.settings.apiURL +'/'+this.state.subsectorPicture.split('./')[1];
+        const topicTagCountsInSubsectors = Config.settings.apiURL +'/'+this.state.topicTagCountsInSubsectors;
+        const subsectorPicture = Config.settings.apiURL +'/'+this.state.subsectorPicture;
+        //console.log(this.state.subsectorPicture)
         //const{topicTagCountsInSubsectors} = this.state;
     return (
             <div>
