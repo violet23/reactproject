@@ -63,10 +63,10 @@ class Searchtable extends React.Component {
             //filterType: "multiselect",
             responsive: "scroll",
             selectableRows: false,
-            rowsPerPage: 10,
+            rowsPerPage: 7,
             viewColumns : false,
             filter: false,
-            rowsPerPageOptions:[50,10,15,20,50,100],
+            //rowsPerPageOptions:[50,10,15,20,50,100],
             onRowClick: this.handleRowClick,
             print:false,
             downloadOptions:{filename: 'topicData.csv', separator: ','} 

@@ -62,7 +62,7 @@ class TopicStatisticsTable extends React.Component {
         rowsPerPage: 10,
         viewColumns : false,
         filter: false,
-        rowsPerPageOptions:[50,10,15,20,50,100],
+        //rowsPerPageOptions:[50,10,15,20,50,100],
         onRowClick: this.handleRowClick,
         print:false,
         downloadOptions:{filename: "Topic"+(window.location.pathname)+'_ProteinTable.csv', separator: ','} 
